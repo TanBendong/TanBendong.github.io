@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>强化学习之基本概念 - Bendong Tan</title>
+
+
+    <meta name="description" content="首页摘要： 目前开始学习强化学习方面的内容，整体学习大纲为：基本概念、动态规划(基于模型的方法)、蒙特卡洛方法(不基于模型)、时间差分法(结合动态规划以及蒙特卡洛模拟的优点)。特别推荐的是一个博客，写得非常通俗易懂，mark一下：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;pinard&#x2F;，本篇文章介绍强化学习的基本概念及基础方程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习之基本概念">
+<meta property="og:url" content="https://tanbendong.github.io/2019/03/27/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="Bendong Tan">
+<meta property="og:description" content="首页摘要： 目前开始学习强化学习方面的内容，整体学习大纲为：基本概念、动态规划(基于模型的方法)、蒙特卡洛方法(不基于模型)、时间差分法(结合动态规划以及蒙特卡洛模拟的优点)。特别推荐的是一个博客，写得非常通俗易懂，mark一下：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;pinard&#x2F;，本篇文章介绍强化学习的基本概念及基础方程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tanbendong.github.io/images/og_image.png">
+<meta property="article:published_time" content="2019-03-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-03T13:03:38.339Z">
+<meta property="article:author" content="谭本东">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tanbendong.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/Ir Black.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="强化学习之基本概念" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-03-26T16:00:00.000Z">2019-03-27</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 分钟 读完 (大约 1333 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                强化学习之基本概念
+            
+        </h1>
+        <div class="content">
+            <p><strong>首页摘要：</strong></p>
+<p>目前开始学习强化学习方面的内容，整体学习大纲为：基本概念、动态规划(基于模型的方法)、蒙特卡洛方法(不基于模型)、时间差分法(结合动态规划以及蒙特卡洛模拟的优点)。特别推荐的是一个博客，写得非常通俗易懂，mark一下：<a href="https://www.cnblogs.com/pinard/">https://www.cnblogs.com/pinard/</a>，本篇文章介绍强化学习的基本概念及基础方程。</p>
+<a id="more"></a>
+<h2 id="强化学习是什么"><a href="#强化学习是什么" class="headerlink" title="强化学习是什么"></a>强化学习是什么</h2><p>机器学习可以大致分为有监督学习、无监督学习以及强化学习，有监督学习经常用语分类及预测任务，无监督学习则适用于特征降维或者聚类任务，而强化学习擅长决策任务。严格来说它们之间的分类并不明显，是一种互相依存的关系。</p>
+<p>用下围棋的例子来引出强化学习吧。当前时刻 $t$ 棋盘($environment$)  棋子的分布为状态 $S_{t}$ ，假设以持白子的棋手是主角，那么其下子的位置则是一个动作($action$) $A_{t}$，完成这个动作会有一个回报($reward$) $r_{t+1}$，这个过程称之为一个策略( $policy$ ) $\pi(A_{t}|S_{t})$ 。在执行完策略之后，棋盘上的棋子分布发生了改变，这个时候状态为$S_{t+1}=s’$ ，这个过程一直持续到这局对弈结束，一局称之为一个 $episode$ 。</p>
+<p>总结起来强化学习就是一个智能体和环境不断交互，针对当前环境的状态按照一定的策略来执行特定的动作，来获得尽可能大的回报的过程，而在这个交互过程中，这个智能体又不断学习进化，所采取的动作越来越合理。</p>
+<h2 id="强化学习基本概念"><a href="#强化学习基本概念" class="headerlink" title="强化学习基本概念"></a>强化学习基本概念</h2><p>其实在上一节的介绍中，对很多概念进行了简化，为了推出完整的强化学习数学模型，需要对上述概念进行补充，下面用四个步骤来推导强化学习的基本方程，这些方程是整个强化学习算法的基石。</p>
+<ol>
+<li><p>策略 $\pi(a|s)$ 是一个状态 $S_{t}=s$ 时执行动作 $A_{t}=a$ 的概率分布，可以理解成是一个具有 $softmax$ 层多输出的神经网络，每个动作的概率之和为1。具体而言：</p>
+<script type="math/tex; mode=display">
+\pi(a|s)=p(A_{t}=a|S_{t}=s)</script></li>
+<li><p>当智能体在状态 $S_{t}=s$ 时执行策略 $\pi(a|s)$ 时，需要先进行评估此策略价值，评估可以用状态价值函数$v_{\pi}(s)$ 来l定量表示，这个价值函数一般是一个期望函数。此外，为了让智能体具有长远的目光，往往会考虑到未来可能的回报，但是又不能让未来的回报过于影响当前的决策，因此需要对未来的回报打个折扣。因此状态价值函数 $v_{\pi}(s)$ 可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split} 
+v_{\pi}(s)&=E_{\pi}(r_{t+1}+\gamma r_{t+2}+ \gamma^{2}r_{t+3}+...+\gamma^{T-1}r_{t+T}|S_{t}=s )\\
+&=E_{\pi}(r_{t+1}+\gamma v(S_{t+1}=s')|S_{t}=s )\\ 
+\end{split}
+\end{equation}</script><p>其中 $\gamma$ 为回报衰减因子，执行策略 $\pi(a|s)$ 也可评估其期望的回报，定义为动作价值函数 $q(s|a)$ :</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split} 
+q_{\pi}(s,a)&= E_{\pi}(r_{t+1}+\gamma r_{t+2}+ \gamma^{2}r_{t+3}+...+\gamma^{T-1}r_{t+T}|S_{t}=s,A_{t}=a )\\
+&=E_{\pi}(r_{t+1}+\gamma q_{\pi}(S_{t+1}=s',A_{t+1}=a')|S_{t}=s ,A_{t}=a)\\ 
+\end{split}
+\end{equation}</script></li>
+<li><p>为了定义环境的概率转化模型，在状态 $s$ 下执行动作 $a$ 转到状态 $s’$ 的概率为 $P_{ss’}^{a}​$ ，那么状态价值函数的期望可以进一步显式表示为：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split} 
+v_{\pi}(s)&=\sum_{a \in A}\pi(a|s)(r_{t+1}+\gamma \sum_{s'\in S}P_{ss'}^{a}v_{\pi}(s'))\\
+& =\sum_{a \in A}\pi(a|s)q_{\pi}(s,a)\\
+\end{split}
+\end{equation}</script><p>动作价值函数也可从上式推出：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+q_{\pi}(s,a)&=r_{t+1}+\gamma \sum_{s'\in S}P_{ss'}^{a}v_{\pi}(s')\\
+& =r_{t+1}+\gamma \sum_{s'\in S}P_{ss'}^{a}(\sum_{a' \in A}\pi(a'|s')q_{\pi}(s',a'))\\
+\end{split}
+\end{equation}</script></li>
+<li><p>综上所述，状态价值函数 $v_{\pi}(s)$ 和动作价值函数 $q_{\pi}(s,a)$ 在策略 $\pi$ 下的表达式可以写成：</p>
+<script type="math/tex; mode=display">
+v_{\pi}(s)=\sum_{a \in A}\pi(a|s)(r_{t+1}+\gamma \sum_{s\in S}P_{ss'}^{a}v_{\pi}(s'))\\
+q_{\pi}(s,a)=r_{t+1}+\gamma \sum_{s\in S}P_{ss'}^{a}(\sum_{a' \in A}\pi(a'|s')q_{\pi}(s',a'))</script></li>
+</ol>
+<h2 id="强化学习求解基本思路"><a href="#强化学习求解基本思路" class="headerlink" title="强化学习求解基本思路"></a>强化学习求解基本思路</h2><p>最后两个公式也被称之为贝尔曼方程，可见其表达式存在递归的形式(同一状态存在若干时刻)，直观上来讲非常符合动态规划的思路，这也是求解这两个公式最先出现的方法，并基于此产生了大量的衍生算法。因此下一篇文章我将重点介绍动态规划求解强化学习贝尔曼方程的方法。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechatpay.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/28/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">强化学习之动态规划</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/03/25/HEXO%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
+                <span class="level-item">HEXO中显示数学公式</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+                          <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="谭本东">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        谭本东
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个看不透事物本质的工科生！
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国湖北武汉</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            59
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            5
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            19
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#强化学习是什么">
+        <span class="has-mr-6">1</span>
+        <span>强化学习是什么</span>
+        </a></li><li>
+        <a class="is-flex" href="#强化学习基本概念">
+        <span class="has-mr-6">2</span>
+        <span>强化学习基本概念</span>
+        </a></li><li>
+        <a class="is-flex" href="#强化学习求解基本思路">
+        <span class="has-mr-6">3</span>
+        <span>强化学习求解基本思路</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%E4%BC%98%E5%8C%96/">
+            <span class="level-start">
+                <span class="level-item">优化</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%90%84%E7%B1%BB%E6%95%99%E7%A8%8B/">
+            <span class="level-start">
+                <span class="level-item">各类教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+            <span class="level-start">
+                <span class="level-item">机器学习</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+            <span class="level-start">
+                <span class="level-item">生活随笔</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">23</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+            <span class="level-start">
+                <span class="level-item">电力系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">17</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://tbendong.github.io" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">英文个人主页</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">tbendong.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.zhihu.com/people/tan-ben-dong/activities" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">知乎</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.zhihu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://scholar.google.com/citations?user=FdEP8xgAAAAJ&hl=en" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">谷歌学术</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">scholar.google.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.researchgate.net/profile/Bendong_Tan" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Researchgate</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.researchgate.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.linkedin.com/in/bendong-tan-453046182/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">领英</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.linkedin.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+        
+        
+            <div class="column-right-shadow is-hidden-widescreen is-sticky">
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/TSA/" style="font-size: 17.14px;">TSA</a> <a href="/tags/latex/" style="font-size: 10px;">latex</a> <a href="/tags/%E4%B9%A6%E6%B3%95/" style="font-size: 12.86px;">书法</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 12.86px;">人工智能</a> <a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 10px;">优化</a> <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/" style="font-size: 12.86px;">凸优化</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 14.29px;">博客</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/" style="font-size: 18.57px;">学术活动</a> <a href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">广域测量系统</a> <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" style="font-size: 17.14px;">强化学习</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 14.29px;">感悟</a> <a href="/tags/%E6%97%85%E6%B8%B8/" style="font-size: 18.57px;">旅游</a> <a href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/" style="font-size: 20px;">智能电网</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15.71px;">机器学习</a> <a href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" style="font-size: 14.29px;">电力系统稳定与控制</a> <a href="/tags/%E8%AE%A1%E5%88%92/" style="font-size: 11.43px;">计划</a> <a href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 14.29px;">读后感</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-02T16:00:00.000Z">2020-10-03</time></div>
+                    <a href="/2020/10/03/%E6%B5%85%E8%B0%88%E6%96%87%E5%8C%96/" class="title has-link-black-ter is-size-6 has-text-weight-normal">浅谈文化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-11T16:00:00.000Z">2020-09-12</time></div>
+                    <a href="/2020/09/12/%E4%B8%B4%E6%B1%9F%E4%BB%99%E4%B8%B4%E6%91%B9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">《临江仙》临摹作品</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-07T16:00:00.000Z">2020-09-08</time></div>
+                    <a href="/2020/09/08/%E7%88%B1%E4%BD%A0%E5%B0%B1%E5%83%8F%E7%88%B1%E7%94%9F%E5%91%BD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">爱你就像爱生命</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/2020%E5%B9%B4%E6%80%BB%E7%BB%93/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年总结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/%E7%BB%83%E5%AD%97%E6%89%93%E5%8D%A1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">临帖每日记录(持续更新)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TSA/">
+                        <span class="tag">TSA</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/latex/">
+                        <span class="tag">latex</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%B9%A6%E6%B3%95/">
+                        <span class="tag">书法</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="tag">人工智能</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BC%98%E5%8C%96/">
+                        <span class="tag">优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">
+                        <span class="tag">凸优化</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2/">
+                        <span class="tag">博客</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/">
+                        <span class="tag">学术活动</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/">
+                        <span class="tag">广域测量系统</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">强化学习</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="tag">总结</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/">
+                        <span class="tag">感悟</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%97%85%E6%B8%B8/">
+                        <span class="tag">旅游</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/">
+                        <span class="tag">智能电网</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/">
+                        <span class="tag">电力系统稳定与控制</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="tag">计划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/">
+                        <span class="tag">读后感</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/">
+                        <span class="tag">软件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+            </div>
+        
+    </div>
+    
+                
+
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="强化学习之基本概念" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 谭本东&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 
+                </p>
+
+            </div>
+
+            <div class="level-middle">
+                <small>
+                <center>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("01/06/2018 12:00:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                setInterval("createtime()",250);
+                </script>
+                
+                    <br>
+                    <span id="busuanzi_container_site_pv" class="theme-info">| 本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> 
+                    <span id="busuanzi_container_site_uv" class="theme-info">| 您是第<span id="busuanzi_value_site_uv"></span>位访问的朋友 |</span>                         
+                
+                </center>
+                </small>
+                
+            </div>
+
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://tanbendong.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'folded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>

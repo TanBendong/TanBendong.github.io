@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>A Novel Temporal Feature Selection for  Time-Adaptive Transient Stabiity Assessment - Bendong Tan</title>
+
+
+    <meta name="description" content="首页摘要： ISGT Europe 2019 于2019年9月底在罗马尼亚首都举办，简单总结了一篇论文投稿。主要内容是针对自适应电力系统暂态稳定评估提出了一种时间序列特征选择方法，仿真结果表明能够在保持评估精度的前提下有效减少训练时间以及降低平均评估时间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Novel Temporal Feature Selection for  Time-Adaptive Transient Stabiity Assessment">
+<meta property="og:url" content="https://tanbendong.github.io/2019/02/18/A%20Novel%20Temporal%20Feature%20Selection%20for%20%20Time-Adaptive%20Transient%20Stabiity%20Assessment/index.html">
+<meta property="og:site_name" content="Bendong Tan">
+<meta property="og:description" content="首页摘要： ISGT Europe 2019 于2019年9月底在罗马尼亚首都举办，简单总结了一篇论文投稿。主要内容是针对自适应电力系统暂态稳定评估提出了一种时间序列特征选择方法，仿真结果表明能够在保持评估精度的前提下有效减少训练时间以及降低平均评估时间。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tanbendong.github.io/images/og_image.png">
+<meta property="article:published_time" content="2019-02-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-02-03T13:46:11.914Z">
+<meta property="article:author" content="谭本东">
+<meta property="article:tag" content="TSA">
+<meta property="article:tag" content="智能电网">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tanbendong.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/Ir Black.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="A Novel Temporal Feature Selection for  Time-Adaptive Transient Stabiity Assessment" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-02-17T16:00:00.000Z">2019-02-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">电力系统</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    15 分钟 读完 (大约 2242 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                A Novel Temporal Feature Selection for  Time-Adaptive Transient Stabiity Assessment
+            
+        </h1>
+        <div class="content">
+            <p><strong>首页摘要：</strong></p>
+<p>ISGT Europe 2019 于2019年9月底在罗马尼亚首都举办，简单总结了一篇论文投稿。主要内容是针对自适应电力系统暂态稳定评估提出了一种时间序列特征选择方法，仿真结果表明能够在保持评估精度的前提下有效减少训练时间以及降低平均评估时间。</p>
+<a id="more"></a>
+<p><img src="https://github.com/TanBendong/myblog/blob/master/photo/2019-2-18-1.jpg?raw=true" alt="2019-2-18-1.jpg"></p>
+<p><img src="https://github.com/TanBendong/myblog/blob/master/photo/2019-2-18-2.jpg?raw=true" alt="2019-2-18-2.jpg"></p>
+<p><img src="https://github.com/TanBendong/myblog/blob/master/photo/2019-2-18-3.jpg?raw=true" alt="2019-2-18-3.jpg"></p>
+<p><img src="https://github.com/TanBendong/myblog/blob/master/photo/2019-2-18-4.jpg?raw=true" alt="2019-2-18-4.jpg"></p>
+<p><img src="https://github.com/TanBendong/myblog/blob/master/photo/2019-2-18-5.jpg?raw=true" alt="2019-2-18-5.jpg"></p>
+<h2 id="以下为主要实现代码"><a href="#以下为主要实现代码" class="headerlink" title="以下为主要实现代码"></a>以下为主要实现代码</h2><h5 id="（1）特征重要性计算程序（MATLAB"><a href="#（1）特征重要性计算程序（MATLAB" class="headerlink" title="（1）特征重要性计算程序（MATLAB)"></a>（1）特征重要性计算程序（MATLAB)</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br></pre></td><td class="code"><pre><span class="line">function [ranked,weight] &#x3D; relieff_tan(X,Y,K,varargin)</span><br><span class="line">% 计算多维时间序列的特征重要性</span><br><span class="line">% X为输入特征，格式为N*n*T，其中N为样本数目，n为特征维数，T为时间商都</span><br><span class="line">% Y为类别标签</span><br><span class="line">if nargin&lt;3</span><br><span class="line">    error(message(&#39;stats:relieff:TooFewInputs&#39;));</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% 检查X数据格式是否正确</span><br><span class="line">if ~isnumeric(X)</span><br><span class="line">    error(message(&#39;stats:relieff:BadX&#39;));</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Parse input arguments</span><br><span class="line">validArgs &#x3D; &#123;&#39;method&#39; &#39;prior&#39; &#39;updates&#39;   &#39;categoricalx&#39; &#39;sigma&#39;&#125;;</span><br><span class="line">defaults  &#x3D; &#123;      &#39;&#39;      []     &#39;all&#39;            &#39;off&#39;      []&#125;;</span><br><span class="line"></span><br><span class="line">% Get optional args</span><br><span class="line">[method,prior,numUpdates,categoricalX,sigma] ...</span><br><span class="line">    &#x3D; internal.stats.parseArgs(validArgs,defaults,varargin&#123;:&#125;);</span><br><span class="line">[X,Y] &#x3D; removeNaNs(X,Y);</span><br><span class="line">    </span><br><span class="line">% Group Y for classification. Get class counts and probabilities.</span><br><span class="line">% Get groups and matrix of class counts</span><br><span class="line">if isa(Y,&#39;categorical&#39;)</span><br><span class="line">    Y &#x3D; removecats(Y);</span><br><span class="line">end</span><br><span class="line">[Y,grp] &#x3D; grp2idx(Y);</span><br><span class="line">[X,Y] &#x3D; removeNaNs(X,Y);</span><br><span class="line">Ngrp &#x3D; numel(grp); % 两类就是2个，有几类就有几个</span><br><span class="line">N &#x3D; size(X,1);</span><br><span class="line">C &#x3D; false(N,Ngrp);</span><br><span class="line">C(sub2ind([N Ngrp],(1:N)&#39;,Y)) &#x3D; true;</span><br><span class="line"></span><br><span class="line">% Get class probs</span><br><span class="line">if isempty(prior) || strcmpi(prior,&#39;empirical&#39;)</span><br><span class="line">    classProb &#x3D; sum(C,1);</span><br><span class="line">elseif strcmpi(prior,&#39;uniform&#39;)</span><br><span class="line">    classProb &#x3D; ones(1,Ngrp);</span><br><span class="line">elseif isstruct(prior)</span><br><span class="line">    if ~isfield(prior,&#39;group&#39;) || ~isfield(prior,&#39;prob&#39;)</span><br><span class="line">        error(message(&#39;stats:relieff:PriorWithMissingField&#39;));</span><br><span class="line">    end</span><br><span class="line">    if iscell(prior.group)</span><br><span class="line">        usrgrp &#x3D; prior.group;</span><br><span class="line">    else</span><br><span class="line">        usrgrp &#x3D; cellstr(prior.group);</span><br><span class="line">    end</span><br><span class="line">    [tf,pos] &#x3D; ismember(grp,usrgrp);</span><br><span class="line">    if any(~tf)</span><br><span class="line">        error(message(&#39;stats:relieff:PriorWithClassNotFound&#39;, grp&#123; find( ~tf, 1 ) &#125;));</span><br><span class="line">    end</span><br><span class="line">    classProb &#x3D; prior.prob(pos);</span><br><span class="line">elseif isnumeric(prior)</span><br><span class="line">    if ~isfloat(prior) || length(prior)~&#x3D;Ngrp || any(prior&lt;0) || all(prior&#x3D;&#x3D;0)</span><br><span class="line">        error(message(&#39;stats:relieff:BadNumericPrior&#39;, Ngrp));</span><br><span class="line">    end</span><br><span class="line">    classProb &#x3D; prior;</span><br><span class="line">else</span><br><span class="line">    error(message(&#39;stats:relieff:BadPrior&#39;));</span><br><span class="line">end</span><br><span class="line">    </span><br><span class="line">    % Normalize class probs</span><br><span class="line">    classProb &#x3D; classProb&#x2F;sum(classProb);</span><br><span class="line">    </span><br><span class="line">    % If there are classes with zero probs, remove them</span><br><span class="line">    zeroprob &#x3D; classProb&#x3D;&#x3D;0;</span><br><span class="line">    if any(zeroprob)</span><br><span class="line">        t &#x3D; zeroprob(Y);</span><br><span class="line">        if sum(t)&#x3D;&#x3D;length(Y)</span><br><span class="line">            error(message(&#39;stats:relieff:ZeroWeightPrior&#39;));</span><br><span class="line">        end</span><br><span class="line">        Y(t) &#x3D; [];</span><br><span class="line">        X(t,:) &#x3D; [];</span><br><span class="line">        C(t,:) &#x3D; [];</span><br><span class="line">        C(:,zeroprob) &#x3D; [];</span><br><span class="line">        classProb(zeroprob) &#x3D; [];</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">% Do we have enough observations?</span><br><span class="line">if length(Y)&lt;2</span><br><span class="line">    error(message(&#39;stats:relieff:NotEnoughObs&#39;));</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Check the number of nearest neighbors</span><br><span class="line">if ~isnumeric(K) || ~isscalar(K) || K&lt;&#x3D;0</span><br><span class="line">    error(message(&#39;stats:relieff:BadK&#39;));</span><br><span class="line">end</span><br><span class="line">K &#x3D; ceil(K);</span><br><span class="line"></span><br><span class="line">% 检查迭代数目</span><br><span class="line">if (~ischar(numUpdates) || ~strcmpi(numUpdates,&#39;all&#39;)) &amp;&amp; ...</span><br><span class="line">        (~isnumeric(numUpdates) || ~isscalar(numUpdates) || numUpdates&lt;&#x3D;0)</span><br><span class="line">    error(message(&#39;stats:relieff:BadNumUpdates&#39;));</span><br><span class="line">end</span><br><span class="line">if ischar(numUpdates)</span><br><span class="line">    numUpdates &#x3D; size(X,1);</span><br><span class="line">else</span><br><span class="line">    numUpdates &#x3D; ceil(numUpdates);</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Check the type of X</span><br><span class="line">if ~ischar(categoricalX) || ...</span><br><span class="line">        (~strcmpi(categoricalX,&#39;on&#39;) &amp;&amp; ~strcmpi(categoricalX,&#39;off&#39;))</span><br><span class="line">    error(message(&#39;stats:relieff:BadCategoricalX&#39;));</span><br><span class="line">end</span><br><span class="line">categoricalX &#x3D; strcmpi(categoricalX,&#39;on&#39;);</span><br><span class="line"></span><br><span class="line">% Check sigma</span><br><span class="line">if ~isempty(sigma) &amp;&amp; ...</span><br><span class="line">        (~isnumeric(sigma) || ~isscalar(sigma) || sigma&lt;&#x3D;0)</span><br><span class="line">    error(message(&#39;stats:relieff:BadSigma&#39;));</span><br><span class="line">end</span><br><span class="line">if isempty(sigma)</span><br><span class="line">        sigma &#x3D; Inf;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% The # updates cannot be more than the # observations</span><br><span class="line">numUpdates &#x3D; min(numUpdates, size(X,1));</span><br><span class="line"></span><br><span class="line">% Choose the distance function depending upon the categoricalX</span><br><span class="line">if ~categoricalX</span><br><span class="line">    distFcn &#x3D; &#39;cityblock&#39;;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Find max and min for every predictor</span><br><span class="line">p &#x3D; size(X,2); % 样本数目</span><br><span class="line">Xmax &#x3D; max(X,[],[1 3]); % 时间序列每个特征值的最大值</span><br><span class="line">Xmin &#x3D; min(X,[],[1 3]);% 时间序列每个特征值的最小值</span><br><span class="line">Xdiff &#x3D; Xmax-Xmin;</span><br><span class="line"></span><br><span class="line">% Exclude single-valued attributes</span><br><span class="line">isOneValue &#x3D; Xdiff &lt; eps(Xmax); % eps是一个函数，可以返回某一个数N的最小浮点数精度</span><br><span class="line">if all(isOneValue)</span><br><span class="line">    ranked &#x3D; 1:p;</span><br><span class="line">    weight &#x3D; NaN(1,p);</span><br><span class="line">    return;</span><br><span class="line">end</span><br><span class="line">X(:,isOneValue) &#x3D; [];</span><br><span class="line">Xdiff(isOneValue) &#x3D; [];</span><br><span class="line">rejected &#x3D; find(isOneValue);</span><br><span class="line">accepted &#x3D; find(~isOneValue);</span><br><span class="line"></span><br><span class="line">% 标准化</span><br><span class="line">if ~categoricalX</span><br><span class="line">    X &#x3D; bsxfun(@rdivide,bsxfun(@minus,X,mean(X,[1,3])),Xdiff); % (X-X_mean)&#x2F;(Xmax-Xmin)标准化</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Get appropriate distance function in one dimension.</span><br><span class="line">% thisx must be a row-vector for one observation.</span><br><span class="line">% x can have more than one row.</span><br><span class="line">if ~categoricalX</span><br><span class="line">    dist1D &#x3D; @(thisx,x) cityblock(thisx,x);</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Call ReliefF. By default all weights are set to NaN.</span><br><span class="line">weight &#x3D; NaN(1,p);</span><br><span class="line">weight(accepted) &#x3D; RelieffClass(X,C,classProb,numUpdates,K,distFcn,dist1D,sigma);</span><br><span class="line"></span><br><span class="line">% Assign ranks to attributes</span><br><span class="line">[~,sorted] &#x3D; sort(weight(accepted),&#39;descend&#39;);</span><br><span class="line">ranked &#x3D; accepted(sorted);</span><br><span class="line">ranked(end+1:p) &#x3D; rejected;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">% -------------------------------------------------------------------------</span><br><span class="line">function attrWeights &#x3D; RelieffClass(scaledX,C,classProb,numUpdates,K,...</span><br><span class="line">    distFcn,dist1D,sigma)</span><br><span class="line">% ReliefF for classification</span><br><span class="line"></span><br><span class="line">[numObs,numAttr,Time] &#x3D; size(scaledX);</span><br><span class="line">attrWeights &#x3D; zeros(1,numAttr);</span><br><span class="line">Nlev &#x3D; size(C,2);</span><br><span class="line"></span><br><span class="line">% Choose the random instances</span><br><span class="line">rndIdx &#x3D; randsample(numObs,numUpdates);</span><br><span class="line">idxVec &#x3D; (1:numObs)&#39;;</span><br><span class="line"></span><br><span class="line">% Make searcher objects, one object per class. </span><br><span class="line">searchers &#x3D; cell(Nlev,1);</span><br><span class="line">for c&#x3D;1:Nlev</span><br><span class="line">    searchers&#123;c&#125; &#x3D; createns(scaledX(C(:,c),:),&#39;Distance&#39;,distFcn); % 这里要进行修改，构建kdtree</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Outer loop, for updating attribute weights iteratively</span><br><span class="line">for i &#x3D; 1:numUpdates</span><br><span class="line">    thisObs &#x3D; rndIdx(i);</span><br><span class="line">    </span><br><span class="line">    % Choose the correct random observation</span><br><span class="line">    selectedX &#x3D; scaledX(thisObs,:,:);</span><br><span class="line"></span><br><span class="line">    % Find the class for this observation</span><br><span class="line">    thisC &#x3D; C(thisObs,:);</span><br><span class="line">    </span><br><span class="line">    % Find the k-nearest hits </span><br><span class="line">    sameClassIdx &#x3D; idxVec(C(:,thisC));</span><br><span class="line">    sameClassX&#x3D;scaledX(sameClassIdx,:,:);</span><br><span class="line">    </span><br><span class="line">    % we may not always find numNeighbor Hits</span><br><span class="line">    lenHits &#x3D; min(length(sameClassIdx)-1,K);</span><br><span class="line"></span><br><span class="line">    % find nearest hits</span><br><span class="line">    % It is not guaranteed that the first hit is the same as thisObs. Since</span><br><span class="line">    % they have the same class, it does not matter. If we add observation</span><br><span class="line">    % weights in the future, we will need here something similar to what we</span><br><span class="line">    % do in ReliefReg.</span><br><span class="line">    </span><br><span class="line">    Hits &#x3D; [];</span><br><span class="line">    if lenHits&gt;0</span><br><span class="line">        SameDistance&#x3D;[];</span><br><span class="line">        for i &#x3D;1:length(sameClassIdx)</span><br><span class="line">            distance&#x3D;sqrt(sum(sum((selectedX-sameClassX(i,:,:)).^2)));</span><br><span class="line">            SameDistance&#x3D;[SameDistance,distance];</span><br><span class="line">        end</span><br><span class="line">        [B,IS]&#x3D;sort(SameDistance);</span><br><span class="line">        idxH &#x3D; IS(1:K); % 这里要进行修改</span><br><span class="line">        idxH(1) &#x3D; [];</span><br><span class="line">        Hits &#x3D; sameClassIdx(idxH);</span><br><span class="line">    end    </span><br><span class="line">    </span><br><span class="line">    % Process misses</span><br><span class="line">    missClass &#x3D; find(~thisC);</span><br><span class="line">    Misses &#x3D; [];</span><br><span class="line">    </span><br><span class="line">    if ~isempty(missClass) % Make sure there are misses!</span><br><span class="line">        % Find the k-nearest misses Misses(C,:) for each class C ~&#x3D; class(selectedX)</span><br><span class="line">        % Misses will be of size (no. of classes -1)x(K)</span><br><span class="line">        Misses &#x3D; zeros(Nlev-1,min(numObs,K+1)); % last column has class index</span><br><span class="line">        </span><br><span class="line">        for mi &#x3D; 1:length(missClass)</span><br><span class="line">            </span><br><span class="line">            % find all observations of this miss class</span><br><span class="line">            missClassIdx &#x3D; idxVec(C(:,missClass(mi)));</span><br><span class="line">            missClassX&#x3D;scaledX(missClassIdx,:,:);</span><br><span class="line">            % we may not always find K misses</span><br><span class="line">            lenMiss &#x3D; min(length(missClassIdx),K);</span><br><span class="line">            % find nearest misses</span><br><span class="line">            MissDistance&#x3D;[];</span><br><span class="line">            for i &#x3D;1:length(missClassIdx)</span><br><span class="line">                distance&#x3D;sqrt(sum(sum((selectedX-missClassX(i,:,:)).^2)));</span><br><span class="line">                MissDistance&#x3D;[MissDistance,distance];</span><br><span class="line">            end</span><br><span class="line">            [B,IM]&#x3D;sort(MissDistance);           </span><br><span class="line">            idxM &#x3D;IM(1:K); % 这里要进行修改</span><br><span class="line">            Misses(mi,1:lenMiss) &#x3D; missClassIdx(idxM);</span><br><span class="line">            </span><br><span class="line">        end</span><br><span class="line">        </span><br><span class="line">        % Misses contains obs indices for miss classes, sorted by dist.</span><br><span class="line">        Misses(:,end) &#x3D; missClass;</span><br><span class="line">    end</span><br><span class="line">            </span><br><span class="line">    %***************** ATTRIBUTE UPDATE *****************************</span><br><span class="line">    % Inner loop to update weights for each attribute:</span><br><span class="line">    </span><br><span class="line">    for j &#x3D; 1:numAttr</span><br><span class="line">        dH &#x3D; diffH(j,scaledX,thisObs,Hits,dist1D,sigma)&#x2F;numUpdates;</span><br><span class="line">        dM &#x3D; diffM(j,scaledX,thisObs,Misses,dist1D,sigma,classProb)&#x2F;numUpdates;</span><br><span class="line">        attrWeights(j) &#x3D; attrWeights(j) - dH + dM;</span><br><span class="line">    end</span><br><span class="line">    %****************************************************************</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%Helper functions RelieffClass</span><br><span class="line"></span><br><span class="line">%--------------------------------------------------------------------------</span><br><span class="line">% DIFFH (for RelieffClass): Function to calculate difference measure</span><br><span class="line">% for an attribute between the selected instance and its hits</span><br><span class="line"></span><br><span class="line">function distMeas &#x3D; diffH(a,X,thisObs,Hits,dist1D,sigma)</span><br><span class="line"></span><br><span class="line">% If no hits, return zero by default</span><br><span class="line">if isempty(Hits)</span><br><span class="line">    distMeas &#x3D; 0;</span><br><span class="line">    return;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Get distance weights</span><br><span class="line">distWts &#x3D; exp(-((1:length(Hits))&#x2F;sigma).^2)&#39;;</span><br><span class="line">distWts &#x3D; distWts&#x2F;sum(distWts);</span><br><span class="line"></span><br><span class="line">% Calculate weighted sum of distances</span><br><span class="line">distMeas &#x3D; sum(dist1D(X(thisObs,a,:),X(Hits,a,:)).*distWts);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%--------------------------------------------------------------------------</span><br><span class="line">% DIFFM (for RelieffClass) : Function to calculate difference measure</span><br><span class="line">% for an attribute between the selected instance and its misses</span><br><span class="line">function distMeas &#x3D; diffM(a,X,thisObs,Misses,dist1D,sigma,classProb)</span><br><span class="line"></span><br><span class="line">distMeas &#x3D; 0;</span><br><span class="line"></span><br><span class="line">% If no misses, return zero</span><br><span class="line">if isempty(Misses)</span><br><span class="line">    return;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Loop over misses</span><br><span class="line">for mi &#x3D; 1:size(Misses,1)</span><br><span class="line">    </span><br><span class="line">    ismiss &#x3D; Misses(mi,1:end-1)~&#x3D;0;</span><br><span class="line">    </span><br><span class="line">    if any(ismiss)</span><br><span class="line">        cls &#x3D; Misses(mi,end);</span><br><span class="line">        nmiss &#x3D; sum(ismiss);</span><br><span class="line">        </span><br><span class="line">        distWts &#x3D; exp(-((1:nmiss)&#x2F;sigma).^2)&#39;;</span><br><span class="line">        distWts &#x3D; distWts&#x2F;sum(distWts);</span><br><span class="line">        </span><br><span class="line">        distMeas &#x3D; distMeas + ...</span><br><span class="line">            sum(dist1D(X(thisObs,a,:),X(Misses(mi,ismiss),a,:)).*distWts(1:nmiss)) ...</span><br><span class="line">            *classProb(cls);</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">% Normalize class probabilities.</span><br><span class="line">% This is equivalent to P(C)&#x2F;(1-P(class(R))) in ReliefF paper.</span><br><span class="line">totProb &#x3D; sum(classProb(Misses(:,end)));</span><br><span class="line">distMeas &#x3D; distMeas&#x2F;totProb;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function [X,Y] &#x3D; removeNaNs(X,Y)</span><br><span class="line">% Remove observations with missing data</span><br><span class="line">NaNidx &#x3D; bsxfun(@or,isnan(Y),any(isnan(X),2));</span><br><span class="line">X(NaNidx,:) &#x3D; [];</span><br><span class="line">Y(NaNidx,:) &#x3D; [];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function d &#x3D; cityblock(thisX,X)</span><br><span class="line">d &#x3D; sqrt(sum((thisX-X).^2,[2,3]));</span><br></pre></td></tr></table></figure>
+<h5 id="（2）电力系统暂态自适应评估程序（PYTHON）"><a href="#（2）电力系统暂态自适应评估程序（PYTHON）" class="headerlink" title="（2）电力系统暂态自适应评估程序（PYTHON）"></a>（2）电力系统暂态自适应评估程序（PYTHON）</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"># ----------------------------------------------------</span><br><span class="line"># Description: Class for DynamicLSTM Network</span><br><span class="line"># Created by: Bendong Tan</span><br><span class="line"># Created time: Friday, Jan 25, 2019</span><br><span class="line"># Last Modified: Monday, Jan 30, 2019</span><br><span class="line"># Wuhan University</span><br><span class="line"># ----------------------------------------------------</span><br><span class="line">import os</span><br><span class="line">os.environ[&#39;KERAS_BACKEND&#39;]&#x3D;&#39;tensorflow&#39;</span><br><span class="line">import time</span><br><span class="line">import numpy as np</span><br><span class="line">from keras.models import Sequential</span><br><span class="line">from keras.layers import Dense,Masking,Flatten,Dropout,LSTM</span><br><span class="line">from keras.preprocessing.sequence import pad_sequences</span><br><span class="line">from keras.utils import to_categorical</span><br><span class="line">from keras.callbacks import ModelCheckpoint</span><br><span class="line">from keras import backend as K</span><br><span class="line">from keras import regularizers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class DynamicLSTM:</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    初始化</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    def __init__(self, X_train, y_train, X_test, y_test):</span><br><span class="line">        n_trainsample, n_timesteps, n_features &#x3D; np.shape(X_train)</span><br><span class="line">        # 训练数据</span><br><span class="line">        self.X_train &#x3D; X_train</span><br><span class="line">        # 测试文件</span><br><span class="line">        self.X_test &#x3D; X_test</span><br><span class="line">        # 训练数据</span><br><span class="line">        self.y_train &#x3D; y_train</span><br><span class="line">        # 测试文件</span><br><span class="line">        self.y_test &#x3D; y_test</span><br><span class="line">        # 最后输出</span><br><span class="line">        self.n_outputs &#x3D; 1</span><br><span class="line">        # 每个时刻的输入特征数量</span><br><span class="line">        self.n_features &#x3D; n_features</span><br><span class="line">        # 时序持续长度为</span><br><span class="line">        self.n_timesteps &#x3D; n_timesteps</span><br><span class="line">        # 层数</span><br><span class="line">        self.layer_num &#x3D; 1</span><br><span class="line">        # 隐含层神经元数目</span><br><span class="line">        self.hidden_size&#x3D;100</span><br><span class="line">        # 每代训练模型步数</span><br><span class="line">        self.batch_size&#x3D;n_trainsample</span><br><span class="line">        # 学习率</span><br><span class="line">        self.learningRate &#x3D; 1e-3</span><br><span class="line">        # 训练代数</span><br><span class="line">        self.epochs&#x3D;200</span><br><span class="line">        # 保存模型数据目录</span><br><span class="line">        self.storePath &#x3D; None</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    搭建LSTM网络</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    def build(self):</span><br><span class="line">        # 开始搭建浒关模型</span><br><span class="line">        model &#x3D; Sequential()</span><br><span class="line">        # 针对自适应评估模式设计补零操作以保持模型输入长度</span><br><span class="line">        model.add(Masking(mask_value&#x3D;0, input_shape&#x3D;(self.n_timesteps, self.n_features)))</span><br><span class="line">        # LSTM层</span><br><span class="line">        model.add(LSTM(self.hidden_size,return_sequences&#x3D;True))</span><br><span class="line">        # 设置dropout防止过拟合</span><br><span class="line">        model.add(Dropout(0.05))</span><br><span class="line">        # model.add(LSTM(self.hidden_size, return_sequences&#x3D;True))</span><br><span class="line">        # model.add(Dropout(0.05))</span><br><span class="line">        model.add(LSTM(self.hidden_size))</span><br><span class="line">        # sigmoid层</span><br><span class="line">        model.add(Dense(self.n_outputs, activation&#x3D;&#39;sigmoid&#39;))</span><br><span class="line">        # 编译模型</span><br><span class="line">        model.compile(loss&#x3D;&#39;binary_crossentropy&#39;, optimizer&#x3D;&#39;adam&#39;, metrics&#x3D;[&#39;accuracy&#39;])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        return model</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    训练模型</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    def fit(self,model):</span><br><span class="line">        # 记录最好模型</span><br><span class="line">        filepath &#x3D; r&quot;.\model\model_best.h5&quot;</span><br><span class="line">        checkpoint &#x3D; ModelCheckpoint(filepath, monitor&#x3D;&#39;val_acc&#39;, verbose&#x3D;1, save_best_only&#x3D;True,</span><br><span class="line">                                     mode&#x3D;&#39;max&#39;)</span><br><span class="line">        callbacks_list &#x3D; [checkpoint]</span><br><span class="line"></span><br><span class="line">        # 训练模型</span><br><span class="line">        model.fit(self.X_train, self.y_train,</span><br><span class="line">                  epochs&#x3D;self.epochs,</span><br><span class="line">                  batch_size&#x3D;self.batch_size,</span><br><span class="line">                  validation_data&#x3D;(self.X_test, self.y_test),</span><br><span class="line">                  callbacks&#x3D;callbacks_list,</span><br><span class="line">                  verbose&#x3D;1)</span><br><span class="line"></span><br><span class="line">        return model</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    标准评估模型</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    def evaluation(self,model,X_test, y_test):</span><br><span class="line">        _, accuracy &#x3D; model.evaluate(X_test, y_test,batch_size&#x3D;len(X_test), verbose&#x3D;1) # 标准评估准确率</span><br><span class="line"></span><br><span class="line">        return accuracy</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    自适应评估模型</span><br><span class="line">    &#39;&#39;&#39;</span><br><span class="line">    def Adaptive_TSA(self,model,X_test, y_test,delta):</span><br><span class="line">        miss &#x3D; 0 # 记录分类错误分数</span><br><span class="line">        right &#x3D; np.zeros((len(y_test), 20)) # 记录每个样本在每个时刻的评估情况，做了评估记为1</span><br><span class="line">        y_pred &#x3D; np.zeros((len(y_test), 1)) # 最终评估分类结果</span><br><span class="line"></span><br><span class="line">        # 自适应评估过程</span><br><span class="line">        for i in range(len(y_test)):</span><br><span class="line">            for t in range(20): # 最大评估时刻数</span><br><span class="line">                # 如果在时间窗口内采取按照时刻逐步增加采样点的方式进行评估</span><br><span class="line">                if t&lt;self.n_timesteps:</span><br><span class="line">                    Input&#x3D;pad_sequences(np.reshape(X_test[i,0:t+1,:], (-1,t+1,self.n_features)), maxlen&#x3D;self.n_timesteps, padding&#x3D;&#39;post&#39;)</span><br><span class="line">                    predictions &#x3D; model.predict(Input)</span><br><span class="line">                    if predictions &gt;&#x3D; delta and predictions &lt;&#x3D; 1:</span><br><span class="line">                        right[i, 0:t + 1] &#x3D; 1</span><br><span class="line">                        y_pred[i] &#x3D; 1</span><br><span class="line">                        break</span><br><span class="line">                    if predictions &gt;&#x3D;0  and predictions &lt; 1-delta:</span><br><span class="line">                        right[i, 0:t + 1] &#x3D; 1</span><br><span class="line">                        y_pred[i] &#x3D; 0</span><br><span class="line">                        break</span><br><span class="line"></span><br><span class="line">                # 如果评估时刻超出时间窗口，则采取滑动时间窗口的方式评估</span><br><span class="line">                if t &gt;&#x3D; self.n_timesteps:</span><br><span class="line">                    Input &#x3D; np.reshape(X_test[i, t-self.n_timesteps+1:t + 1, :], (-1, self.n_timesteps, self.n_features))</span><br><span class="line">                    predictions &#x3D; model.predict(Input)</span><br><span class="line">                    if predictions &gt;&#x3D; delta and predictions &lt;&#x3D; 1:</span><br><span class="line">                        right[i, 0:t + 1] &#x3D; 1</span><br><span class="line">                        break</span><br><span class="line">                    if predictions &gt;&#x3D; 0 and predictions &lt; 1 - delta:</span><br><span class="line">                        right[i, 0:t + 1] &#x3D; 1</span><br><span class="line">                        y_pred[i] &#x3D; 0</span><br><span class="line">                        break</span><br><span class="line">                    # 超出最大时刻的均视为失稳处理</span><br><span class="line">                    if t + 1 &#x3D;&#x3D; 20:</span><br><span class="line">                        if predictions&gt;&#x3D;0.5:</span><br><span class="line">                            y_pred[i] &#x3D; 1</span><br><span class="line">                        if predictions&lt;0.5:</span><br><span class="line">                            y_pred[i] &#x3D; 0</span><br><span class="line">                        right[i, 0:t + 1] &#x3D; np.ones((1, t+1))</span><br><span class="line">                        break</span><br><span class="line">        # 计算自适应评估准确率</span><br><span class="line">        for i in range(len(y_test)):</span><br><span class="line">            if y_pred[i]!&#x3D;y_test[i]:</span><br><span class="line">                miss &#x3D; miss + 1</span><br><span class="line"></span><br><span class="line">        # 记录平均评估时间</span><br><span class="line">        ART &#x3D; sum(sum(right)) &#x2F; len(y_test)</span><br><span class="line"></span><br><span class="line">        # 记录自适应评估准确率</span><br><span class="line">        Accuracy&#x3D;(len(y_test)-miss)&#x2F;len(y_test)*100</span><br><span class="line"></span><br><span class="line">        return ART , Accuracy</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/TSA/" rel="tag">TSA</a>, <a class="has-link-grey -link" href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/" rel="tag">智能电网</a>, <a class="has-link-grey -link" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag">机器学习</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechatpay.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/03/10/%E8%B4%9F%E8%8D%B7%E7%83%AD%E5%8A%9B%E5%9B%BE%E7%9A%84%E7%BB%98%E5%88%B6%E6%80%BB%E7%BB%93/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">负荷热力图的绘制总结</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2019/02/01/%E3%80%8AIntelligent%20Time-Adaptive%20Transient%20Stability%20Assessment%20System%E3%80%8B%E8%AE%BA%E6%96%87%E7%9A%84%E5%A4%8D%E7%8E%B0%E5%8F%8A%E7%BB%93%E8%AE%BA%E5%88%86%E6%9E%90/">
+                <span class="level-item">《Intelligent Time-Adaptive Transient Stability Assessment System》论文的复现及结论分析</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+                          <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="谭本东">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        谭本东
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个看不透事物本质的工科生！
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国湖北武汉</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            59
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            5
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            19
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#以下为主要实现代码">
+        <span class="has-mr-6">1</span>
+        <span>以下为主要实现代码</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#（1）特征重要性计算程序（MATLAB">
+        <span class="has-mr-6">1.1</span>
+        <span>（1）特征重要性计算程序（MATLAB)</span>
+        </a></li><li>
+        <a class="is-flex" href="#（2）电力系统暂态自适应评估程序（PYTHON）">
+        <span class="has-mr-6">1.2</span>
+        <span>（2）电力系统暂态自适应评估程序（PYTHON）</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%E4%BC%98%E5%8C%96/">
+            <span class="level-start">
+                <span class="level-item">优化</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%90%84%E7%B1%BB%E6%95%99%E7%A8%8B/">
+            <span class="level-start">
+                <span class="level-item">各类教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+            <span class="level-start">
+                <span class="level-item">机器学习</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+            <span class="level-start">
+                <span class="level-item">生活随笔</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">23</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+            <span class="level-start">
+                <span class="level-item">电力系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">17</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://tbendong.github.io" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">英文个人主页</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">tbendong.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.zhihu.com/people/tan-ben-dong/activities" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">知乎</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.zhihu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://scholar.google.com/citations?user=FdEP8xgAAAAJ&hl=en" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">谷歌学术</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">scholar.google.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.researchgate.net/profile/Bendong_Tan" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Researchgate</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.researchgate.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.linkedin.com/in/bendong-tan-453046182/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">领英</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.linkedin.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+        
+        
+            <div class="column-right-shadow is-hidden-widescreen is-sticky">
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/TSA/" style="font-size: 17.14px;">TSA</a> <a href="/tags/latex/" style="font-size: 10px;">latex</a> <a href="/tags/%E4%B9%A6%E6%B3%95/" style="font-size: 12.86px;">书法</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 12.86px;">人工智能</a> <a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 10px;">优化</a> <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/" style="font-size: 12.86px;">凸优化</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 14.29px;">博客</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/" style="font-size: 18.57px;">学术活动</a> <a href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">广域测量系统</a> <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" style="font-size: 17.14px;">强化学习</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 14.29px;">感悟</a> <a href="/tags/%E6%97%85%E6%B8%B8/" style="font-size: 18.57px;">旅游</a> <a href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/" style="font-size: 20px;">智能电网</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15.71px;">机器学习</a> <a href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" style="font-size: 14.29px;">电力系统稳定与控制</a> <a href="/tags/%E8%AE%A1%E5%88%92/" style="font-size: 11.43px;">计划</a> <a href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 14.29px;">读后感</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-02T16:00:00.000Z">2020-10-03</time></div>
+                    <a href="/2020/10/03/%E6%B5%85%E8%B0%88%E6%96%87%E5%8C%96/" class="title has-link-black-ter is-size-6 has-text-weight-normal">浅谈文化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-11T16:00:00.000Z">2020-09-12</time></div>
+                    <a href="/2020/09/12/%E4%B8%B4%E6%B1%9F%E4%BB%99%E4%B8%B4%E6%91%B9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">《临江仙》临摹作品</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-07T16:00:00.000Z">2020-09-08</time></div>
+                    <a href="/2020/09/08/%E7%88%B1%E4%BD%A0%E5%B0%B1%E5%83%8F%E7%88%B1%E7%94%9F%E5%91%BD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">爱你就像爱生命</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/2020%E5%B9%B4%E6%80%BB%E7%BB%93/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年总结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/%E7%BB%83%E5%AD%97%E6%89%93%E5%8D%A1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">临帖每日记录(持续更新)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TSA/">
+                        <span class="tag">TSA</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/latex/">
+                        <span class="tag">latex</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%B9%A6%E6%B3%95/">
+                        <span class="tag">书法</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="tag">人工智能</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BC%98%E5%8C%96/">
+                        <span class="tag">优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">
+                        <span class="tag">凸优化</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2/">
+                        <span class="tag">博客</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/">
+                        <span class="tag">学术活动</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/">
+                        <span class="tag">广域测量系统</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">强化学习</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="tag">总结</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/">
+                        <span class="tag">感悟</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%97%85%E6%B8%B8/">
+                        <span class="tag">旅游</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/">
+                        <span class="tag">智能电网</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/">
+                        <span class="tag">电力系统稳定与控制</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="tag">计划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/">
+                        <span class="tag">读后感</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/">
+                        <span class="tag">软件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+            </div>
+        
+    </div>
+    
+                
+
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="A Novel Temporal Feature Selection for  Time-Adaptive Transient Stabiity Assessment" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 谭本东&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 
+                </p>
+
+            </div>
+
+            <div class="level-middle">
+                <small>
+                <center>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("01/06/2018 12:00:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                setInterval("createtime()",250);
+                </script>
+                
+                    <br>
+                    <span id="busuanzi_container_site_pv" class="theme-info">| 本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> 
+                    <span id="busuanzi_container_site_uv" class="theme-info">| 您是第<span id="busuanzi_value_site_uv"></span>位访问的朋友 |</span>                         
+                
+                </center>
+                </small>
+                
+            </div>
+
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://tanbendong.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'folded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>

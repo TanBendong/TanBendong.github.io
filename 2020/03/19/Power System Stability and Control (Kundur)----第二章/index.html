@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Power System Stability and Control (Kundur)----第二章 - Bendong Tan</title>
+
+
+    <meta name="description" content="首页摘要： 本章主要介绍电力系统稳定问题的定义和分类，目的在于给出对电力系统稳定问题一个大概的了解，数学上具体的分析会在后续章节中给出。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Power System Stability and Control (Kundur)----第二章">
+<meta property="og:url" content="https://tanbendong.github.io/2020/03/19/Power%20System%20Stability%20and%20Control%20(Kundur)----%E7%AC%AC%E4%BA%8C%E7%AB%A0/index.html">
+<meta property="og:site_name" content="Bendong Tan">
+<meta property="og:description" content="首页摘要： 本章主要介绍电力系统稳定问题的定义和分类，目的在于给出对电力系统稳定问题一个大概的了解，数学上具体的分析会在后续章节中给出。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tanbendong.github.io/images/og_image.png">
+<meta property="article:published_time" content="2020-03-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-22T06:20:01.446Z">
+<meta property="article:author" content="谭本东">
+<meta property="article:tag" content="电力系统稳定与控制">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tanbendong.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/Ir Black.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Power System Stability and Control (Kundur)----第二章" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-18T16:00:00.000Z">2020-03-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">电力系统</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    14 分钟 读完 (大约 2108 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Power System Stability and Control (Kundur)----第二章
+            
+        </h1>
+        <div class="content">
+            <p><strong>首页摘要：</strong></p>
+<p>本章主要介绍电力系统稳定问题的定义和分类，目的在于给出对电力系统稳定问题一个大概的了解，数学上具体的分析会在后续章节中给出。</p>
+<a id="more"></a>
+<p>电力系统稳定是指在正常运行状态下保持运行平衡点或者在遭受故障后重新到达可接受的状态平衡点，这是电力系统安全运行最基本的要求。从物理特性上，电力系统稳定问题可以分为功角稳定和电压稳定问题，前者表现为发电机转子之间的功角是否发生偏离，后者则表现为电压是否能够维持在一定范围内。但是，一旦电力系统发生稳定问题，两者总是交织在一起，例如，发生短路故障，可能既出现功角分离，也出现电压崩溃。然而，分别对它们的特性、影响因素进行分析理解并给出相应的反制措施对电力系统运行预控制而言是非常有必要的。</p>
+<p>此外，在时间尺度上也可以将电力系统分为短期、中期、长期稳定问题，但是它们并没有绝对的区分界限，因此在本文中只做简要的介绍，并没有从机理上对其详细分析。</p>
+<h2 id="功角稳定问题"><a href="#功角稳定问题" class="headerlink" title="功角稳定问题"></a>功角稳定问题</h2><p>功角稳定指的是发电机转子之间达到同步旋转的状态，而这本质上是发电机在相反的作用力下达到的一个平衡点。书中用一个例子来描述了这种稳定现象。假设多辆汽车在环形跑道上驾驶，两两之间互相用橡皮筋连接。这里的汽车类比电网中的发电机转子，橡皮筋类比电网中的输电线。当在某辆汽车上加上一个反作用力，那么前面的车会在橡皮筋的作用力下减速，后面的车则会加速，最后所有的车达到一个相对静止的状态，外部作用力的能量全部损耗在与地面的摩擦力当中。但是，如果橡皮筋承受不住汽车之间的拉力则有可能断裂，这时一部分车会相对另一部分车加速奔驰。</p>
+<p>在电力系统中，当遭受扰动后一台同步发电机转子转矩上的变化包含了同步转矩变化（相当于汽车例子中的汽车之间的作用力，用于拉回同步）和抑制转矩变化（相当于汽车例子中地面的阻尼，阻尼用于抑制震荡），因此功角稳定问题的表现形式主要由这两种转矩决定。下面从功角问题中的小干扰稳定问题和暂态稳定问题来分别阐述。</p>
+<p><strong>（1）小干扰稳定问题</strong><br>小干扰问题，顾名思义，是电力系统在遭受小干扰下保持电网发电机同步的能力。如果发生小扰动后，发电机转子的转矩变化缺少同步转矩成分，那么失稳表现为发电机转子功角的稳步增加，一般是因为缺少励磁控制的作用；如果缺少抑制转矩成分，失稳表现为幅值在不断的震荡中增加的过程。下图（a）是发生小干扰后缺少同步转矩下稳定和失稳的表现；图（b）是发生小干扰后缺少抑制转矩下稳定和失稳的表现。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\small disturbance.jpg" width = "400" height = "400"> 
+</div>
+
+<p>在现代电力系统中，小干扰稳定的转矩变化主要是缺少抑制转矩成分，因此一旦失稳就出现震荡行为，根据震荡行为的不同又可以分为几种模式：<br>1）Local modes，发生在一台发电机或者电网一小部分区域发电机的震荡；<br>2）Interarea modea，发生在两个区域之间的发电机的震荡摇摆，一般是通过不够坚强的联络线相连的互联系统容易造成这种情况；<br>3）Control modes，一般由未能整定成合适参数的控制设备造成；<br>4）Torsional modes，一般和涡轮机发电机旋转设备有关。<br><strong> （2）暂态稳定问题</strong><br>暂态稳定是指在遭受大干扰后到达新的平衡点的能力。可以分为三种情况：稳定（case 1）、单摆失稳（case 2）、多摆失稳（case 3）。值得一提的是多摆失稳前期表现稳定，后期表现为interarea modes 震荡失稳。单摆失稳下，其时间尺度在3到5s左右；多摆失稳时间尺度则在10s左右。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\transient stability.jpg" width = "400" height = "400"> 
+</div>
+
+<h2 id="电压稳定问题"><a href="#电压稳定问题" class="headerlink" title="电压稳定问题"></a>电压稳定问题</h2><p>电压稳定定义为在电网任意一个节点注入无功时，该节点电压是增加的，否则为电压失稳。这类稳定问题主要和负荷有关，以一个简单电路来说明，如下图所示，可以看出，当恒定阻抗负荷$Z_{LD}$减小时，负荷有功不断增大，但是在$Z_{LD}&gt;Z_{LN}$时，负荷功率就不断下降了，而这个区域就是失稳区域，对应下面第三张图的虚线左半部分，此时无功越高，电压越低。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\voltage stability_1.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    <img src="\images\Power System Stability and Control\voltage stability.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    <img src="\images\Power System Stability and Control\reactive power.jpg" width = "400" height = "400"> 
+</div>
+
+<p>电压稳定稳定问题可以根据扰动大小来分类：<br>1）大干扰电压稳定：在遭受大干扰后电压恢复到一定的电压水平。它由负荷特性以及保护控制特性有关，时间尺度在秒级到10分钟左右；<br>2）小干扰电压稳定，在遭受小干扰，例如逐渐少量增加负荷时维持住电压水平的能力。它由在给定时间内的负荷特性以及连续、离散控制有关。</p>
+<h2 id="中长期电力系统稳定"><a href="#中长期电力系统稳定" class="headerlink" title="中长期电力系统稳定"></a>中长期电力系统稳定</h2><p>根据时间尺度也可以对电力系统稳定分类：<br>短期稳定：0到10s；<br>中期稳定：10s到若干分钟；<br>长期稳定：若干分钟到几十分钟。<br>但是其中的时间界限并不是绝对的，一般来说是根据设备响应的不充分性、保护与控制设备的协调性、有功无功备用的丰富性来决定的。短期稳定问题一般指的是暂态过程，例如单摆失稳。中期稳定侧重于同步发电机之间的功率震荡，包括暂态稳定中没有考虑到的慢过程影响因素、电压和频率的大幅跌落。长期稳定侧重于发生扰动后可能涉及到的连锁反应以及系统解列造成的各个孤岛继续能够保持稳定的能力，因此在这种情况下往往评估的是每个孤岛的平均频率，而不是评估每台发电机的相对功角。目前随着慢动态以及快动态仿真分析技术的成熟，中期稳定与长期稳定的界限并不是那么的重要了。</p>
+<h2 id="电力系统稳定最终分类"><a href="#电力系统稳定最终分类" class="headerlink" title="电力系统稳定最终分类"></a>电力系统稳定最终分类</h2><p>下图是对稳定问题的总体分类。考虑到功角稳定、电压稳定和中长期稳定并不是具有很明显的分类界限，因此它们总是交织在一起。但是各类稳定问题的控制方式又有所区别，因此在控制的时候不能以牺牲一种稳定来满足另一种稳定。需要从各个稳定问题的角度来看待电力系统，所以发展针对不同稳定的分析工具以及识别各种稳定重叠程度的分析方法是很有必要的。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\classification of stability.jpg" width = "400" height = "400"> 
+</div>
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" rel="tag">电力系统稳定与控制</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechatpay.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/14/%E5%AE%B6%E5%BA%AD%E3%80%81%E7%A7%81%E6%9C%89%E5%88%B6%E5%92%8C%E5%9B%BD%E5%AE%B6%E7%9A%84%E8%B5%B7%E6%BA%90/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">家庭、私有制和国家的起源</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/18/Power%20System%20Stability%20and%20Control%20(Kundur)----%E7%AC%AC%E4%B8%80%E7%AB%A0/">
+                <span class="level-item">Power System Stability and Control (Kundur)----第一章</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+                          <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="谭本东">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        谭本东
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个看不透事物本质的工科生！
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国湖北武汉</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            59
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            5
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            19
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#功角稳定问题">
+        <span class="has-mr-6">1</span>
+        <span>功角稳定问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#电压稳定问题">
+        <span class="has-mr-6">2</span>
+        <span>电压稳定问题</span>
+        </a></li><li>
+        <a class="is-flex" href="#中长期电力系统稳定">
+        <span class="has-mr-6">3</span>
+        <span>中长期电力系统稳定</span>
+        </a></li><li>
+        <a class="is-flex" href="#电力系统稳定最终分类">
+        <span class="has-mr-6">4</span>
+        <span>电力系统稳定最终分类</span>
+        </a></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%E4%BC%98%E5%8C%96/">
+            <span class="level-start">
+                <span class="level-item">优化</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%90%84%E7%B1%BB%E6%95%99%E7%A8%8B/">
+            <span class="level-start">
+                <span class="level-item">各类教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+            <span class="level-start">
+                <span class="level-item">机器学习</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+            <span class="level-start">
+                <span class="level-item">生活随笔</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">23</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+            <span class="level-start">
+                <span class="level-item">电力系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">17</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://tbendong.github.io" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">英文个人主页</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">tbendong.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.zhihu.com/people/tan-ben-dong/activities" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">知乎</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.zhihu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://scholar.google.com/citations?user=FdEP8xgAAAAJ&hl=en" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">谷歌学术</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">scholar.google.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.researchgate.net/profile/Bendong_Tan" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Researchgate</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.researchgate.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.linkedin.com/in/bendong-tan-453046182/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">领英</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.linkedin.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+        
+        
+            <div class="column-right-shadow is-hidden-widescreen is-sticky">
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/TSA/" style="font-size: 17.14px;">TSA</a> <a href="/tags/latex/" style="font-size: 10px;">latex</a> <a href="/tags/%E4%B9%A6%E6%B3%95/" style="font-size: 12.86px;">书法</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 12.86px;">人工智能</a> <a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 10px;">优化</a> <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/" style="font-size: 12.86px;">凸优化</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 14.29px;">博客</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/" style="font-size: 18.57px;">学术活动</a> <a href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">广域测量系统</a> <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" style="font-size: 17.14px;">强化学习</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 14.29px;">感悟</a> <a href="/tags/%E6%97%85%E6%B8%B8/" style="font-size: 18.57px;">旅游</a> <a href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/" style="font-size: 20px;">智能电网</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15.71px;">机器学习</a> <a href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" style="font-size: 14.29px;">电力系统稳定与控制</a> <a href="/tags/%E8%AE%A1%E5%88%92/" style="font-size: 11.43px;">计划</a> <a href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 14.29px;">读后感</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-02T16:00:00.000Z">2020-10-03</time></div>
+                    <a href="/2020/10/03/%E6%B5%85%E8%B0%88%E6%96%87%E5%8C%96/" class="title has-link-black-ter is-size-6 has-text-weight-normal">浅谈文化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-11T16:00:00.000Z">2020-09-12</time></div>
+                    <a href="/2020/09/12/%E4%B8%B4%E6%B1%9F%E4%BB%99%E4%B8%B4%E6%91%B9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">《临江仙》临摹作品</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-07T16:00:00.000Z">2020-09-08</time></div>
+                    <a href="/2020/09/08/%E7%88%B1%E4%BD%A0%E5%B0%B1%E5%83%8F%E7%88%B1%E7%94%9F%E5%91%BD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">爱你就像爱生命</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/2020%E5%B9%B4%E6%80%BB%E7%BB%93/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年总结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/%E7%BB%83%E5%AD%97%E6%89%93%E5%8D%A1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">临帖每日记录(持续更新)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TSA/">
+                        <span class="tag">TSA</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/latex/">
+                        <span class="tag">latex</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%B9%A6%E6%B3%95/">
+                        <span class="tag">书法</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="tag">人工智能</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BC%98%E5%8C%96/">
+                        <span class="tag">优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">
+                        <span class="tag">凸优化</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2/">
+                        <span class="tag">博客</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/">
+                        <span class="tag">学术活动</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/">
+                        <span class="tag">广域测量系统</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">强化学习</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="tag">总结</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/">
+                        <span class="tag">感悟</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%97%85%E6%B8%B8/">
+                        <span class="tag">旅游</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/">
+                        <span class="tag">智能电网</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/">
+                        <span class="tag">电力系统稳定与控制</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="tag">计划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/">
+                        <span class="tag">读后感</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/">
+                        <span class="tag">软件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+            </div>
+        
+    </div>
+    
+                
+
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Power System Stability and Control (Kundur)----第二章" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 谭本东&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 
+                </p>
+
+            </div>
+
+            <div class="level-middle">
+                <small>
+                <center>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("01/06/2018 12:00:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                setInterval("createtime()",250);
+                </script>
+                
+                    <br>
+                    <span id="busuanzi_container_site_pv" class="theme-info">| 本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> 
+                    <span id="busuanzi_container_site_uv" class="theme-info">| 您是第<span id="busuanzi_value_site_uv"></span>位访问的朋友 |</span>                         
+                
+                </center>
+                </small>
+                
+            </div>
+
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://tanbendong.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'folded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>

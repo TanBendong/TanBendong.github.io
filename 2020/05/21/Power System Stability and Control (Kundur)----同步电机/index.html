@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 4.2.1" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Power System Stability and Control (Kundur)----同步电机 - Bendong Tan</title>
+
+
+    <meta name="description" content="首页摘要： 都说要拥有一个有趣的灵魂，同步电机可以说是电力系统的灵魂，稳定的时候它就像温文尔雅的君子，失稳的时候它又像犯了狂躁症。为了对其有所了解，这章主要从同步电机绕组排列和磁场分析、一般模型建立、稳态和动态分析模型来介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Power System Stability and Control (Kundur)----同步电机">
+<meta property="og:url" content="https://tanbendong.github.io/2020/05/21/Power%20System%20Stability%20and%20Control%20(Kundur)----%E5%90%8C%E6%AD%A5%E7%94%B5%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Bendong Tan">
+<meta property="og:description" content="首页摘要： 都说要拥有一个有趣的灵魂，同步电机可以说是电力系统的灵魂，稳定的时候它就像温文尔雅的君子，失稳的时候它又像犯了狂躁症。为了对其有所了解，这章主要从同步电机绕组排列和磁场分析、一般模型建立、稳态和动态分析模型来介绍。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tanbendong.github.io/images/og_image.png">
+<meta property="article:published_time" content="2020-05-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-21T06:29:26.634Z">
+<meta property="article:author" content="谭本东">
+<meta property="article:tag" content="电力系统稳定与控制">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tanbendong.github.io/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/Ir Black.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+
+<link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body class="is-3-column">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="Power System Stability and Control (Kundur)----同步电机" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/categories">分类</a>
+                
+                <a class="navbar-item"
+                href="/tags">标签</a>
+                
+                <a class="navbar-item"
+                href="/about">关于我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+
+    
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6-tablet is-6-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-20T16:00:00.000Z">2020-05-21</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">电力系统</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    1 小时 读完 (大约 11550 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Power System Stability and Control (Kundur)----同步电机
+            
+        </h1>
+        <div class="content">
+            <p><strong>首页摘要：</strong></p>
+<p>都说要拥有一个有趣的灵魂，同步电机可以说是电力系统的灵魂，稳定的时候它就像温文尔雅的君子，失稳的时候它又像犯了狂躁症。为了对其有所了解，这章主要从同步电机绕组排列和磁场分析、一般模型建立、稳态和动态分析模型来介绍。</p>
+<a id="more"></a>
+<p>这章的内容全部参考自如下文献，细节可查阅它们：</p>
+<p>[1] 辜承林,陈乔夫, 等. 电 机 学[J]. 武 汉: 华 中 科 技科技大学出本社, 2001.</p>
+<p>[2] 何仰赞, 温增银. 电力系统分析[M]. 华中科技大学出版社, 2002.</p>
+<p>[3] Kundur P, Balu N J, Lauby M G. Power system stability and control[M]. New York: McGraw-hill, 1994.</p>
+<h2 id="同步电机图示"><a href="#同步电机图示" class="headerlink" title="同步电机图示"></a>同步电机图示</h2><div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\image of generator.png" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图1
+</div>
+
+<p>图1是一个凸极机，其中电枢是指发生能量转换的地方，而定子绕组和转子绕组都是等效后的图示。实质上，定子绕组是在转子相切的机壁上分散排列，通过合理的排列可以等效成图中的效果。</p>
+<p><strong>注</strong>：这里的符号表示中，a和后文的A符号可互相替换，${a}’$和后文的X符号可互相替换，其它相以此类推。</p>
+<h2 id="同步电机的绕组分析"><a href="#同步电机的绕组分析" class="headerlink" title="同步电机的绕组分析"></a>同步电机的绕组分析</h2><p>要制造出一个可用的同步电机，要满足以下条件：</p>
+<p>（1）转子产生的磁场沿着气隙是正弦分布的，这样才有可能产生正弦电压；</p>
+<p>（2）机端电压也是正弦变化的，如果是三相同步电机，每一相相角相差120度。</p>
+<p>第一个条件在构造转子一定的形状可以实现，第二个条件可以通过合理地排列绕组来实现。此外，感性来理解，要想电机不时刻振动，定子三相电流产生的合成磁场必然也是正弦分布的，而且和转子磁场相对静止（可能差了一定角度）。换句话说，定子三相电流产生的合成磁场是和转子磁场一样在气隙中同步旋转的正弦形状的磁场。如果两者不相对静止，同步电机必然因为不均匀的磁场力而发生振动。因此定子绕组排列后的效果是：</p>
+<p>（1）三相绕组各自产生正弦分布的磁通（磁势），而且它们的合成磁场是和转子磁场相对静止的正弦旋转磁场；</p>
+<p>（2）为了节省制造成本，定子绕组在一定磁场下的感应电势是最大的。<br>一般而言，采用60相带可以获得最大感应电势，即每隔60度电角度的导体都串联，如图2所示：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\winding.png" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图2
+</div>
+这里两根导体之间电角度是20度是因为电机是双极转子，以A相为例，从1号导体到3号导体刚好占了60度电角度，而19号导体到21号导体则分别和它们相差360度电角度，因此把这两组导体相串联即可获得最大感应电势。X相其实也属于A相，从电角度可以发现，其电势角度和A相刚好相差180度，因此X相和A相反向串联就可以得到最后的A相。图3给了实现A相绕组的部分连接过程，部分具体连接顺序为：1——10——2。后续连接顺序类似。可以发现B-Y相和C-Z相都各自相差120度，形成了三相对称绕组。
+
+
+
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\winding1.png" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图3
+</div>
+
+
+<p>上述是单层绕组的排列方式，可以看到1号导体和10号导体构成的一个线圈电角度距离是180度，这种线圈成为整距线圈。为了降低谐波，可以采用双层绕组，这种绕组线圈电角度小于180度，但各相电角度还是相差120度，因此其产生的感应电势更小。每相的感应电动势幅值可以表示成：</p>
+<script type="math/tex; mode=display">
+E_{\phi}=4.44Nfk_{N}\Phi</script><p>其中，$N$为相绕组匝数，$k_{N}$是因为线圈的短距和分布特征造成的折扣系数，$\Phi$是每极磁通。这个感应电势和绕组等效成图1所示的单个导体的感应电动势相等，图1的绕组也称为集中绕组，之后我们都将用集中绕组来说明，便于理解。</p>
+<h2 id="同步电机的磁场分析"><a href="#同步电机的磁场分析" class="headerlink" title="同步电机的磁场分析"></a>同步电机的磁场分析</h2><p>在知道每相感应电动势幅值之后，我们还需要知道同步电机磁场具体是如何变化的，以便求出每相感应电动势的相量表示，这样才能准确分析同步电机。为了明晰同步电机磁场，根据磁场理论，知道磁动势$F$和磁导$P $就能计算出磁通（磁场）：</p>
+<script type="math/tex; mode=display">
+\Phi =\frac{F}{P }</script><p>这节我们首先介绍磁动势的分布及计算，至于磁导会在后续内容介绍计算方法。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\cidongshi.png" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图4
+</div>
+
+<p>先来看一相的磁动势分布，最后再将三相磁动势合成。首先，将A相按照电机圆周展开，以A相点作为起点，可以得到图4黄线所示的方波磁动势分布，其基波是如图4红线所示的正弦分布，可以看出，每一相在某个时刻的磁动势在同步电机圆周空间上的分布属于正弦分布。然而，我们知道，磁动势是和通过导体的电流成正比的，而每一相电流是随时刻成正弦变化的，假设A相电流的表达式是：</p>
+<script type="math/tex; mode=display">
+i_{a}=I_{m} \cos \left(\omega_{s} t\right)</script><p>其中，$i_{a}$是A相电流瞬时值，$I_{m}$是电流幅值，$\omega_{s}$是同步电机电角速度。再考虑磁动势同步电机圆周空间上的正弦分布和磁动势相比导体电流的比例，可得A相磁动势分布的表达式：</p>
+<script type="math/tex; mode=display">
+f_{Ac}=N_{a}I_{m}\cos \theta \cos \omega_{s} t</script><p>其中，$N_{a}$是因为分布系数等因素而造成的磁动势和电流之间的等效匝数，$\theta$是图四中距离原点的电角度。其余相和A相在时间和空间上分别相差120度倍数的相位，所以可以推知它们的磁动势分布表达式为：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+f_{Bc}=N_{a}I_{m} \cos \left(\theta-\frac{2}{3} \pi\right) \cos \left(\omega_{s} t-\frac{2}{3} \pi\right) \\
+f_{Cc}=N_{a}I_{m} \cos \left(\theta-\frac{4}{3} \pi\right) \cos \left(\omega_{s} t-\frac{4}{3} \pi\right)
+\end{array}</script><p>因此，三相磁动势分布表达式如下：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+f_{Ac}=N_{a}I_{m}\cos \theta \cos \omega_{s} t \\
+f_{Bc}=N_{a}I_{m} \cos \left(\theta-\frac{2}{3} \pi\right) \cos \left(\omega_{s} t-\frac{2}{3} \pi\right) \\
+f_{Cc}=N_{a}I_{m} \cos \left(\theta-\frac{4}{3} \pi\right) \cos \left(\omega_{s} t-\frac{4}{3} \pi\right)
+\end{array}</script><p>通过三角函数分解可以将上式写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+f_{Ac}=\frac{1}{2} N_{a}I_{m}\cos(\omega_{s} t-\theta) + \frac{1}{2} K_{c}I_{m}\cos(\omega_{s} t + \theta)\\
+f_{Bc}=\frac{1}{2} N_{a}I_{m}\cos(\omega_{s} t-\theta) + \frac{1}{2} K_{c}I_{m}\cos(\omega_{s} t + \theta-\frac{4}{3} \pi) \\
+f_{Cc}=\frac{1}{2} N_{a}I_{m}\cos(\omega_{s} t-\theta) + \frac{1}{2} K_{c}I_{m}\cos(\omega_{s} t + \theta-\frac{2}{3} \pi))
+\end{array}</script><p>三相磁动势分布相加可得合成磁动势$F_{s}$：</p>
+<script type="math/tex; mode=display">
+F_{s}=\frac{3}{2} N_{a}I_{m}\cos(\omega_{s} t-\theta)</script><p><strong>从合成磁动势可以发现它实质上是一个在同步电机气隙中保持同步电角速度旋转的正弦波磁动势，这个性质对于后续的分析非常重要，特别是对现代同步电机模型建立的理解极其有帮助</strong></p>
+<h2 id="同步电机模型的模型建立"><a href="#同步电机模型的模型建立" class="headerlink" title="同步电机模型的模型建立"></a>同步电机模型的模型建立</h2><h3 id="正方向的确定"><a href="#正方向的确定" class="headerlink" title="正方向的确定"></a>正方向的确定</h3><p>在建立模型之前首先需要明确正方向，以便避免出现符号方向的混乱，对于同步发电机，本文采用发电机惯例来规定正方向。但是发电机惯例在物理理解上会绕一些，所以先用电动机惯例来说明，如图5所示。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\assumed direction.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图5
+</div>
+
+
+
+<p>图5中，根据电动机惯例，端口是外部电源，电流流入端口的方向是正方向，电压正方向和电流方向同向。以图5中绕组向上轴线作为磁场的正方向，那么其感应出来的电动势为$e_{k}=-\frac{d\psi_{k}}{dt}=-p\psi_{k}$，其中$p$是微分算子。由于，由电流生成的磁链$\Psi_{k}$总是阻止电流变化，因此$p\psi_{k}$的方向和电流相反，至此所有物理量正方向规定完成。如果采用发电机惯例，只需要将电流正方向反向即可这时候所有物理量正方向如图6所示：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\assumed direction1.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图6
+</div>
+
+
+
+<p>从图6可以推知基本的电路方程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+u_{k}=-i_{k} R_{k}+p \psi_{k} \\
+\psi_{k}=-l_{k} i_{k}
+\end{array}</script><p>其中下标$k$可以替换成后面三相所用的”a”、”b”、”c”。需要注意的是，因为电流和磁场一般满足右手螺旋定则，所以第二个式子电感$l_{k}$前有个负号。</p>
+<h3 id="A-B-C坐标参考系下的同步电机模型"><a href="#A-B-C坐标参考系下的同步电机模型" class="headerlink" title="A-B-C坐标参考系下的同步电机模型"></a>A-B-C坐标参考系下的同步电机模型</h3><div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\winding distribution.png" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图7
+</div>
+
+
+
+<p>根据上一小节的正方向，可以推出每一相的的端口方程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{a}=\frac{d \psi_{a}}{d t}-R_{a} i_{a}=p \psi_{a}-R_{a} i_{a} \\
+e_{b}=\frac{d \psi_{b}}{d t}-R_{a} i_{a}=p \psi_{b}-R_{a} i_{b} \\
+e_{c}=\frac{d \psi_{c}}{d t}-R_{a} i_{a}=p \psi_{c}-R_{a} i_{c}
+\end{array}</script><p>$e_{a}$、$e_{b}$、$e_{b}$分别是三相端口电压，$R_{a}$是定子每一相的电阻。可以看出要求出每一相电压，需要求出每一相的磁链，以A相磁链来说明。一般而言，同步电机由六个绕组组成，分别是三相定子绕组、转子励磁绕组f、转子等值绕组D（起阻尼作用）、转子等值绕组Q（起阻尼作用），如图7所示。这六个绕组的磁链互相交链，所以，考虑一般情况（稳态和动态），A相的磁链可以通过A相绕组电流、B相绕组电流、C相绕组电流、励磁绕组电流和两个等值绕组感应生成，用公式写成：</p>
+<script type="math/tex; mode=display">
+\psi_{a}=-l_{a a} i_{a}-l_{a b} i_{b}-l_{a c} i_{c}+l_{a f d} i_{f d}+l_{a k d} i_{k d}+l_{a k q} i_{k q}</script><p>在上式中，$l_{a a}$是A相的自感电感，$l_{a b}$是A、B相的互感电感，$l_{a f d}$是A相、励磁绕组的互感电感，$l_{a k d}$是A相、等值绕组D的互感电感，$l_{a k q}$是A相、等值绕组Q的互感电感。同理可得其它相的磁链计算公式：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{b}=-l_{b b} i_{b}-l_{a b} i_{a}-l_{b c} i_{c}+l_{b f d} i_{f d}+l_{b k d} i_{k d}+l_{b k q} i_{k q} \\
+\psi_{c}=-l_{c c} i_{c}-l_{a c} i_{a}-l_{a c} i_{c}+l_{c f d} i_{f d}+l_{c k d} i_{k d}+l_{c k q} i_{k q}
+\end{array}</script><p>综上所述，三相绕组的磁链公式为：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{a}=-l_{a a} i_{a}-l_{a b} i_{b}-l_{a c} i_{c}+l_{a f d} i_{f d}+l_{a k d} i_{k d}+l_{a k q} i_{k q} \\
+ \psi_{b}=-l_{b b} i_{b}-l_{a b} i_{a}-l_{b c} i_{c}+l_{b f d} i_{f d}+l_{b k d} i_{k d}+l_{b k q} i_{k q} \\
+ \psi_{c}=-l_{c c} i_{c}-l_{a c} i_{a}-l_{a c} i_{c}+l_{c f d} i_{f d}+l_{c k d} i_{k d}+l_{c k q} i_{k q}
+ \end{array}</script><p>再来看转子侧的电路方程，在转子侧我们采用电动机惯例，因此方程写成：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+e_{f d} &=p \psi_{f d}+R_{f d} i_{f d} \\
+0 &=p \psi_{k d}+R_{k d} i_{k d} \\
+0 &=p \psi_{k q}+R_{k q} i_{k q}
+\end{aligned}</script><p>其磁链方程写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{f d}=L_{f d} i_{f d}+L_{f d d} i_{k d}-L_{a f d}\left[i_{a} \cos \theta+i_{b} \cos \left(\theta-\frac{2 \pi}{3}\right)+i_{c} \cos \left(\theta+\frac{2 \pi}{3}\right)\right] \\
+\psi_{k d}=L_{f d d} i_{f d}+L_{k k d} i_{d d}-L_{a k d}\left[i_{a} \cos \theta+i_{b} \cos \left(\theta-\frac{2 \pi}{3}\right)+i_{c} \cos \left(\theta+\frac{2 \pi}{3}\right)\right] \\
+\psi_{k q}=L_{k k q} i_{k q}+L_{a k q}\left[i_{a} \sin \theta+i_{b} \sin \left(\theta-\frac{2 \pi}{3}\right)+i_{c} \sin \left(\theta+\frac{2 \pi}{3}\right)\right]
+\end{array}</script><p>上式中，$L_{f d d}$是励磁绕组和等值绕组d之间的互感，$L_{k k d}$是等值绕组d的自感，出现$L_{k k q}$是等值绕组q的自感，负号是因为定子绕组正方向规定采用了发电机惯例。</p>
+<p>这时候出现的问题是，各个电感怎么得到我们依然不清楚，所以下面介绍求取各个电感的公式。<strong>注：关于同步电机各个电感的感性理解可以看何仰赞老师编写的《电力系统分析》第三章内容，他用图示的方式解释了同步电机大部分电感为什么是周期性变化的，这篇文章主要从数学公式上来解释这个现象。</strong></p>
+<p>以A相为例，<strong>首先看它的自感$l_{a a}$</strong>，$l_{a a}$是由A相电流自身通过气隙交链而表现出的电磁感应。A相的磁势$F_{a}$为正弦分布，幅值是$N_{a}i_{a}$，其中$N_{a}$是等效匝数，而且三相的等效匝数一般是相等的，$i_{a}$是A相电流瞬时值。如图8所示，其中的d轴是和转子直轴重合的，因此d轴保持同步转速转动，可以沿着d轴和q轴分解$F_{s}$，其d轴分量$F_{a d}$和q轴分量$F_{a q}$分别是：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+F_{a d}=N_{a} i_{a} \cos \theta \\
+F_{a q}=N_{a} i_{a} \cos \left(\theta+90^{\circ}\right)=-N_{a} i_{a} \sin \theta
+\end{array}</script><p>之所以选择这两个轴，是因为实际测量同步电机参数的时候，这两个方向比较容易测量。那么可以求得这两个方向上的气隙磁通：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\Phi_{g a d}=\left(N_{a} i_{a} \cos \theta\right) P_{d} \\
+\Phi_{g a q}=\left(-N_{a} i_{a} \sin \theta\right) P_{q}
+\end{array}</script><p>其中，$P_{d}$是直轴磁导，$P_{q}$是交轴磁导。</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\inductance.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图8
+</div>
+
+
+
+<p>d轴和q轴两个方向上的气隙磁通合成到A相上即可得到A相电流感应到自身的通过气隙磁通：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Phi_{g a a} &=\Phi_{g a d} \cos \theta-\Phi_{g a q} \sin \theta \\
+&=N_{a} i_{a}\left(P_{d} \cos ^{2} \theta+P_{q} \sin ^{2} \theta\right) \\
+&=N_{a} i_{a}\left(\frac{P_{d}+P_{q}}{2}+\frac{P_{d}-P_{q}}{2} \cos 2 \theta\right)
+\end{aligned}</script><p>那么，A相自身交链的磁链为：</p>
+<script type="math/tex; mode=display">
+\psi_{gaa}=N_{a}\Phi_{g a a}</script><p>因此，A相气隙自感可以求得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l_{g a a} &=\frac{N_{a} \Phi_{g a a}}{i_{a}} \\
+&=N_{a}^{2}\left(\frac{P_{d}+P_{q}}{2}+\frac{P_{d}-P_{q}}{2} \cos 2 \theta\right) \\
+&=L_{g 0}+L_{a a 2} \cos 2 \theta
+\end{aligned}</script><p>考虑到漏电感$L_{a l}$，那么最终A相总自感为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l_{a a} &=L_{a l}+l_{g a a} \\
+&=L_{a l}+L_{g 0}+L_{a a 2} \cos 2 \theta \\
+&=L_{a a 0}+L_{a a 2} \cos 2 \theta
+\end{aligned}</script><p>可以看出，A相自感是一个周期为$\pi$的函数，同理可得其它相的自感：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+l_{b b}=L_{a a 0}+L_{a a 2} \cos 2\left(\theta-\frac{2 \pi}{3}\right) \\
+l_{c c}=L_{a a 0}+L_{a a 2} \cos 2\left(\theta+\frac{2 \pi}{3}\right)
+\end{array}</script><p><strong>再看定子相绕组之间的互感</strong>，因为互感是客观存在的，所以和电流是否存在无关，那么我们可以用A相电流交链到其它相的磁链来计算，以交链到B相为例，之前我们已经求到了气隙磁通的d轴分量和q轴分量，那么它们俩交链到B相的磁通$\Phi_{g b a}$可以通过投影到B相轴线得到：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Phi_{g b a} &=\Phi_{g a d} \cos \left(\theta-\frac{2 \pi}{3}\right)-\Phi_{g a q} \sin \left(\theta-\frac{2 \pi}{3}\right) \\
+&=N_{a} i_{a}\left[\mathrm{P}_{d} \cos \theta \cos \left(\theta-\frac{2 \pi}{3}\right)+\mathrm{P}_{q} \sin \theta \sin \left(\theta-\frac{2 \pi}{3}\right)\right] \\
+&=N_{a} i_{a}\left[-\frac{\mathrm{P}_{d}+\mathrm{P}_{q}}{4}+\frac{\mathrm{P}_{d}-\mathrm{P}_{q}}{2} \cos \left(2 \theta-\frac{2 \pi}{3}\right)\right]
+\end{aligned}</script><p>因此，A相和B相的气隙互感为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l_{g b a} &=\frac{N_{a} \Phi_{g b a}}{i_{a}} \\
+&=-\frac{1}{2} L_{g 0}+L_{a b 2} \cos \left(2 \theta-\frac{2 \pi}{3}\right)
+\end{aligned}</script><p>考虑到漏感$L_{abl}$，A相和B相的总互感为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l_{a b}=l_{b a} &=L_{abl}+l_{g b a} \\
+&=L_{abl}+\frac{N_{a} \Phi_{g b a}}{i_{a}} \\
+&=L_{abl}-\frac{1}{2} L_{g o}+L_{a b 2} \cos \left(2 \theta-\frac{2 \pi}{3}\right) \\
+&= -L_{a b 0}+L_{a b 2} \cos \left(2 \theta-\frac{2 \pi}{3}\right) \\
+&= -L_{a b 0}-L_{a b 2} \cos \left(2 \theta+\frac{\pi}{3}\right)
+\end{aligned}</script><p>同理可得其它相的互感：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+l_{b c}=l_{c b}=-L_{a b 0}-L_{a b 2} \cos (2 \theta-\pi) \\
+l_{c a}=l_{a c}=-L_{a b 0}-L_{a b 2} \cos \left(2 \theta-\frac{\pi}{3}\right)
+\end{array}</script><p><strong>最后再看定子绕组和转子绕组之间的互感</strong>，因为转子的构造使得其在气隙形成的磁通是正弦分布的，而转子的磁势是恒定不变的，考虑两种情况，当转子和A相轴平行时，转子产生经过A相绕组的磁通最大，当转子和A相轴垂直时，转子产生通过A相绕组的磁通为零。因此可以推出A相和转子励磁绕组、两个等值绕组之间的互感：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l_{f d a }=l_{a f d} &=L_{a f d} \cos \theta \\
+l_{k d a }=l_{a k d} &=L_{a k d} \cos \theta \\
+l_{k q a }=l_{a k q} &=L_{a k q} \cos \left(\theta+\frac{\pi}{2}\right) \\
+&=-L_{a k q} \sin \theta
+\end{aligned}</script><p>其它相绕组表达式类似，但是转子励磁绕组和等值绕组d的互感是常数，等值绕组q和励磁绕组、等值绕组d因为互相垂直而互感为零。</p>
+<p>从前面的分析可以看出，在ABC坐标系下的同步电机电感随着转子转动发生周期性改变，这对于我们求解包含了磁链方程的电力系统微分方程带来了极大困难，因此需要找到合适的方法来克服这个困难。</p>
+<h3 id="d-q-0坐标参考系下的同步电机模型"><a href="#d-q-0坐标参考系下的同步电机模型" class="headerlink" title="d-q-0坐标参考系下的同步电机模型"></a>d-q-0坐标参考系下的同步电机模型</h3><p>A-B-C坐标参考系下之所以出现同步电机电感参数周期性变化的原因是转子和三相电流发生相对运动，且转子是关于直轴或者交轴对称而不是随意对称的。为了避免参数的周期性变化怎么办呢？本质上就是转子运动引起的，我们能不能让转子“静止”呢？前面研究过合成磁势$F$的性质，它相对转子是静止的，而且合成磁势$F$在各相轴线的投影是各相磁势的瞬时值的某个倍数关系。同时，磁势和电流是成比例的关系，也就是说，我们可以虚拟一个合成电流$I$，它和合成磁势$F$有着相同的相位，在幅值上成比例关系，但是在各相轴线的投影是各相电流的瞬时值。我们可以画出这些量的相量图，假设各相轴线是各相电流的正方向，那么可以得到图9：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\dq transformation.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图9
+</div>
+
+
+
+<p>当得到这个合成电流时，因为转子是关于关于直轴或者交轴对称，这两个方向的磁导是确定的，我们可以将合成电流投影到这两个方向，从而能够保证这两个方向的电感参数是固定的（电感和磁导成正比关系），这样可得：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+i_{\mathrm{d}}=I \cos (\theta -\alpha) \\
+i_{\mathrm{q}}=-I \sin (\theta-\alpha)
+\end{array}</script><p>而定子三相电流瞬时值可以表示成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+i_{\mathrm{a}}=I \cos \theta \\
+i_{\mathrm{b}}=I \cos \left(\theta-120^{\circ}\right) \\
+i_{\mathrm{c}}=I \cos \left(\theta+120^{\circ}\right)
+\end{array}</script><p>合并两式即可消掉$\theta$，得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+i_{d}=\frac{2}{3} \left[i_{a} \cos \theta+i_{b} \cos \left(\theta-\frac{2 \pi}{3}\right)+i_{c} \cos \left(\theta+\frac{2 \pi}{3}\right)\right] \\
+i_{q}=-\frac{2}{3}\left[i_{a} \sin \theta+i_{b} \sin \left(\theta-\frac{2 \pi}{3}\right)+i_{c} \sin \left(\theta+\frac{2 \pi}{3}\right)\right]
+\end{array}</script><p>也就是说，我们用$i_{d}$、$i_{q}$两个电流来表征三相电流，在三相平衡系统中是成立的，因为三相电流之和为0，也就是说只有两个自由度，用两个量就可以完整表征。但是在三相不平衡的情况中，因为存在零序电流，需要三个自由度来表征三相系统，所以我们单独将零序电流$i_{0}$拎出来表示：</p>
+<script type="math/tex; mode=display">
+i_{0}=\frac{1}{3}\left(i_{a}+i_{b}+i_{c}\right)</script><p>用矩阵表示上述过程为：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}
+i_{d} \\
+i_{q} \\
+i_{0}
+\end{array}\right]=\frac{2}{3}\left[\begin{array}{ccc}
+\cos \theta & \cos \left(\theta-\frac{2 \pi}{3}\right) & \cos \left(\theta+\frac{2 \pi}{3}\right) \\
+-\sin \theta & -\sin \left(\theta-\frac{2 \pi}{3}\right) & -\sin \left(\theta+\frac{2 \pi}{3}\right) \\
+\frac{1}{2} & \frac{1}{2} & \frac{1}{2}
+\end{array}\right]\left[\begin{array}{c}
+i_{a} \\
+i_{b} \\
+i_{c}
+\end{array}\right]</script><p>其中，</p>
+<script type="math/tex; mode=display">
+\Gamma =\frac{2}{3}\left[\begin{array}{ccc}
+\cos \theta & \cos \left(\theta-\frac{2 \pi}{3}\right) & \cos \left(\theta+\frac{2 \pi}{3}\right) \\
+-\sin \theta & -\sin \left(\theta-\frac{2 \pi}{3}\right) & -\sin \left(\theta+\frac{2 \pi}{3}\right) \\
+\frac{1}{2} & \frac{1}{2} & \frac{1}{2}
+\end{array}\right]</script><p>$\Gamma$称之为帕克矩阵，它能将三相物理量变换到d-q轴上，相应的逆变换为：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}
+i_{a} \\
+i_{b} \\
+i_{c}
+\end{array}\right]=\left[\begin{array}{ccc}
+\cos \theta & -\sin \theta & 1 \\
+\cos \left(\theta-\frac{2 \pi}{3}\right) & -\sin \left(\theta-\frac{2 \pi}{3}\right) & 1 \\
+\cos \left(\theta+\frac{2 \pi}{3}\right) & -\sin \left(\theta+\frac{2 \pi}{3}\right) & 1
+\end{array}\right]\left[\begin{array}{c}
+i_{d} \\
+i_{q} \\
+i_{0}
+\end{array}\right]</script><p>即：</p>
+<script type="math/tex; mode=display">
+\Gamma^{-1}=\left[\begin{array}{ccc}
+\cos \theta & -\sin \theta & 1 \\
+\cos \left(\theta-\frac{2 \pi}{3}\right) & -\sin \left(\theta-\frac{2 \pi}{3}\right) & 1 \\
+\cos \left(\theta+\frac{2 \pi}{3}\right) & -\sin \left(\theta+\frac{2 \pi}{3}\right) & 1
+\end{array}\right]</script><p>利用帕克矩阵对前述的$\psi_{a}$，$ \psi_{b}$ ，$\psi_{c}$变换到d-q-0坐标下，可得：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{d}=-\left(L_{a a 0}+L_{a b 0}+\frac{3}{2} L_{a a 2}\right) i_{d}+L_{a f d} i_{f a}+L_{a k d} i_{k d} \\
+\psi_{q}=-\left(L_{a a 0}+L_{a b 0}-\frac{3}{2} L_{a a 2}\right) i_{q}+L_{a k q} i_{k q} \\
+\psi_{0}=-\left(L_{a a l}-2 L_{a b 0}\right) i_{0}
+\end{array}</script><p>令</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+L_{d}=L_{a a 0}+L_{a b 0}+\frac{3}{2} L_{a a 2}\\
+L_{q}=L_{a a 0}+L_{a b 0}-\frac{3}{2} L_{a a 2} \\
+L_{0}=L_{a a 0}-2 L_{a b 0}
+\end{array}</script><p>那么有：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{d}=-L_{d} i_{d}+L_{a f d} i_{f d}+L_{a k d} i_{k d} \\
+\psi_{q}=-L_{q} i_{q}+L_{a k q} i_{k q} \\
+\psi_{0}=-L_{0} i_{0}
+\end{array}</script><p>可以看到，在d-q-0坐标系下，所有的定子侧电感参数为常数，大大降低了计算复杂度。</p>
+<p>在转子侧，也能对其中的三相电流用d-q-0电流替换得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{f d}=L_{ff d} i_{f d}+L_{f d d} i_{d d}-\frac{3}{2} L_{a f d} i_{d} \\
+\psi_{k d}=L_{f d} i_{f d}+L_{k k d} i_{k d}-\frac{3}{2} L_{a k d} i_{d} \\
+\psi_{k q}=L_{k k q} i_{k q}-\frac{3}{2} L_{a k q} i_{q}
+\end{array}</script><p>对定子每一相的的端口方程$e_{a}$、$e_{b}$、$e_{b}$进行帕克变换可以得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=p \psi_{d}-\psi_{q} p \theta-R_{a} i_{d}=p \psi_{d}-\psi_{q} \omega_{s}-R_{a} i_{d} \\
+e_{q}=p \psi_{q}+\psi_{d} p \theta-R_{a} i_{q} =p \psi_{q}+\psi_{d} \omega_{s}-R_{a} i_{q} \\
+e_{0}=p \psi_{0}-R_{a} i_{0}
+\end{array}</script><p><strong>注：何仰赞老师的《电力系统分析》第三章有更加清楚的推导过程，这里不再赘述（其实是因为这个变换算起来真滴是太恐怖了！）</strong>。从d-q-0坐标系下的电压方程可以看出，电压主要由两部分组成：表征变压器电压的$p \psi_{d}$和表征切割电势的$\psi_{q} \omega_{s}$。在这里，我们可以大概地理解一下，首先，因为转子产生的正弦磁场切割导体，所以必然产生正弦电压；其次，转子磁势利用磁场对转子绕组和定子绕组进行耦合，进行能量转换，因此这相当一台变压器，但因为转子磁势相对于定子合成磁势是静止的，只要两个磁势没有发生变化，磁链也不会改变，因此在稳态下是不会有变压器电压的，在暂态下，因为改变了耦合磁链的大小，因此产生了变压器电压。总而言之，d-q-0坐标系下的电压方程是适合稳态和动态情况的一般方程。</p>
+<p>在获得d-q-0坐标系下的电压电流后，同步电机的输出功率也可以求出来了：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+P_{t}&=e_{a} i_{a}+e_{b} i_{b}+e_{c} i_{c} \\
+&= \frac{3}{2}(e_{d} i_{d}+e_{q} i_{q}+2 e_{0} i_{0})\\
+\end{aligned}</script><p>进一步用磁链替换掉电压可得：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+P_{t}=\frac{3}{2}\left[\left(i_{d} p \psi_{d}+i_{q} p \psi_{q}+2 i_{0} p \psi_{0}\right)\right. \\
++\left(\psi_{d} i_{q}-\psi_{q} i_{d}\right) \omega_{s} \\
+\left.-\left(i_{d}^{2}+i_{q}^{2}+2 i_{0}^{2}\right) R_{a}\right]
+\end{array}</script><p>第一行代表了定子磁能，第二行代表气隙传输的能量，第三行代表的是定子铜损。那么气隙中的力矩（电磁力矩）应该通过气隙传输的能量（电磁功率）来进行计算，即：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T_{e} &=\frac{3}{2}\left(\psi_{d} i_{q}-\psi_{q} i_{d}\right) \frac{\omega_{s}}{\omega_{m e c h}} \\
+&=\frac{3}{2}\left(\psi_{d} i_{q}-\psi_{q} i_{d}\right) \frac{p_{f}}{2}
+\end{aligned}</script><p>$\omega_{m e c h}$是转子机械角速度，$p_{f}$是转子极数。</p>
+<p>因为前述都是用有名值来表示的，其中的一些系数既不便于计算，也不便于理解，因此需要采用标幺化来去除系数，具体标幺过程可见kundur原书，如果没有特别说明，后续给出符号均为标幺值，这里只给出标幺后的标准方程：</p>
+<p><strong>电压方程</strong>：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=p \psi_{d}-\omega_{s} \psi_{q}-R_{a} i_{d} \\
+e_{q}=p \psi_{q}+\omega_{s} \psi_{d}-R_{a} i_{q} \\
+e_{0}=p \psi_{0}-R_{a} i_{0} \\
+e_{fd}=p \psi_{fd}+r_{fd}i_{fd} \\
+0=p \psi_{kd}+r_{kd} i_{kd} \\
+0=p \psi_{kq}+r_{kq} i_{kq}
+\end{array}</script><p><strong>磁链方程</strong>：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{d}=-L_{d} i_{d}+L_{a f d} i_{f d}+L_{a k d} i_{k d} \\
+\psi_{q}=-L_{q} i_{q}+L_{a k q} i_{kq} \\
+\psi_{0}=-L_{0} i_{0} \\
+\psi_{f d}=L_{ff d} i_{f d}+L_{f k d} i_{k d}-L_{f d a} i_{d} \\
+\psi_{k d}=L_{k d f} i_{f d}+L_{k k d} i_{k d}-L_{k d a} i_{d} \\
+\psi_{k q}=L_{k k q} i_{k q}-L_{k q a} i_{q}
+\end{array}</script><p>其中，$L_{d}$可以拆分为直轴漏电感$L_{l}$和直轴电枢电感$L_{ad}$，$L_{q}$可以拆分为交轴漏电感$L_{l}$和交轴电枢电感$L_{aq}$，具体表达式为：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+L_{d}=L_{l}+L_{a d} \\
+L_{q}=L_{l}+L_{a q}
+\end{array}</script><p>之所以这么拆分，是因为$L_{d}$的公式为$L_{d}=L_{a a 0}+L_{a b 0}+\frac{3}{2} L_{a a 2}$，包含了漏电感和主电感，因此即便经过d-q-0变换之后，也存在漏电感和主电感。$-L_{a d}i_{d}$表示合成磁势对应下的主磁通（链），$-L_{l}i_{d}$ 表示定子侧的漏磁通（链），可以用图10来进一步说明：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\generator.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图10
+</div>
+
+
+
+<p>假设图10中S-S’线圈是三相经过d-q-0变换而合成的定子虚拟线圈，它和d-q-0参考轴一样是保持同步转速转动，因此它俩相对静止。这里只考虑稳态情况以及只看定子虚拟线圈的d轴磁通分量（q轴类似分析方式），那么D线圈中电流为0（没有电源），只有虚拟合成线圈和励磁线圈f具有电流，在稳态下，对于每个线圈d轴方向来说，都有两个磁路：一个是磁阻很小的铁芯磁路（大红圈的路径），另一个是每个线圈附近也有磁阻很大的空气回路（小红圈的路径）。那么从定子侧来看，磁通包含两部分:虚拟合成线圈电流和励磁线圈f电流综合起来的合成磁势所产生的主磁通$\Phi_{ad}$（大红圈）穿越气隙之后很自然地走磁导大的地方，也有一小部分磁通$\Phi_{al}$走空气回路。用公式表示则是：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\Phi_{ad} =F_{ad}P_{ad} \\
+\Phi_{al} =F_{ad}P_{al} \\
+\Phi_{ad}+\Phi_{al} = F_{ad}(P_{ad}+P_{al} )=F_{ad}P_{d}
+\end{array}</script><p>其中，$P_{ad}$是铁芯磁路的磁导，$P_{al}$是虚拟合成线圈经过空气回路的磁导，那么它们磁导和为$P_{d}$。而磁导$P$和电感$L$是成正比的，具体公式为：</p>
+<script type="math/tex; mode=display">
+L=N^{2}P</script><p>其中，$N$为线圈匝数。因此很容易得到，$L_{d}=L_{l}+L_{a d}$，其它线圈也有相同性质，全部写在一起就是：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+L_{d}=L_{l}+L_{a d} \\
+L_{q}=L_{l}+L_{a q} \\
+L_{ff d} =L_{fl}+L_{a d} \\
+L_{kd f} =L_{kdl}+L_{a d} \\
+L_{kq f} =L_{kql}+L_{a q} \\
+\end{array}</script><p>那么，励磁线圈在计算通过自己磁链，考虑定子电流对它的影响时，电感就应该是$L_{a d}$，定子电流交链励磁绕组的磁通就是$L_{ad} i_{d}$，这部分磁通不是图10所画的大红线，因为大红线是励磁电流和虚拟合成线圈电流最终合成磁场的d轴方向。从这里可以推知：</p>
+<script type="math/tex; mode=display">
+L_{f d a}=L_{a d}</script><p>同样的，</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+L_{f d a}=L_{a d} \\
+L_{k d a}=L_{a d} \\
+L_{k q a}=L_{a q} 
+\end{array}</script><p>综上所述，最后的标准方程可以写成：</p>
+<p><strong>电压方程</strong>：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=p \psi_{d}-\omega_{s} \psi_{q}-R_{a} i_{d} \\
+e_{q}=p \psi_{q}+\omega_{s} \psi_{d}-R_{a} i_{q} \\
+e_{0}=p \psi_{0}-R_{a} i_{0} \\
+e_{fd}=p \psi_{fd}+r_{fd}i_{fd} \\
+0=p \psi_{kd}+r_{kd} i_{kd} \\
+0=p \psi_{kq}+r_{kq} i_{kq}
+\end{array}</script><p><strong>磁链方程</strong>：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}\psi_{d}=-L_{d} i_{d}+L_{a d} i_{f d}+L_{a d} i_{k d} \\
+\psi_{q}=-L_{q} i_{q}+L_{a q} i_{kq} \\
+\psi_{0}=-L_{0} i_{0} \\
+\psi_{f d}=L_{ff d} i_{f d}+L_{f k d} i_{k d}-L_{ad} i_{d} \\
+\psi_{k d}=L_{k d f} i_{f d}+L_{k k d} i_{k d}-L_{ad} i_{d} \\
+\psi_{k q}=L_{k k q} i_{k q}-L_{aq} i_{q}
+\end{array}</script><p>而输出功率和电磁转矩分别为：</p>
+<script type="math/tex; mode=display">
+P_{t}=e_{d} i_{d}+e_{q} i_{q}+2 e_{0} i_{0}</script><script type="math/tex; mode=display">
+T_{e}=\psi_{d} i_{q}-\psi_{q} i_{d}</script><h2 id="同步电机的稳态模型分析"><a href="#同步电机的稳态模型分析" class="headerlink" title="同步电机的稳态模型分析"></a>同步电机的稳态模型分析</h2><p>前面建立的是同步电机的通用模型，为了更加清晰地分析同步电机的物理规律，可以分成稳态模型和动态模型来分析，这小节介绍的就是稳态模型。在这里，我们考虑凸极机的稳态模型，更具有通用性，如果是隐极机，把d轴和q轴方向的阻抗看成相等代入计算即可。</p>
+<p>建立稳态模型时，我们希望用一个包含电源、电阻、阻抗的单端口电路来表征同步电机稳态特性，因此只需要将电源电势、电阻、阻抗等效出来即可。首先求电源电势，那么就需要列出三相的电势方程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{a}=E_{m} \cos \left(\omega_{s} t+\alpha\right) \\
+e_{b}=E_{m} \cos \left(\omega_{s} t-\frac{2 \pi}{3}+\alpha\right) \\
+e_{c}=E_{m} \cos \left(\omega_{s} t+\frac{2 \pi}{3}+\alpha\right)
+\end{array}</script><p>其中，$E_{m}$是电势幅值，$\alpha$是A相电势相角。对上述方程进行帕克变换得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=E_{t} \cos \left(\omega_{s} t+\alpha-\theta\right) \\
+e_{q}=E_{t} \sin \left(\omega_{s} t+\alpha-\theta\right)
+\end{array}</script><p>而其中，$\theta=\omega_{s} t+\theta_{0}$，$\theta_{0}$是初始空间位置，$E_{t}$是经过变换之后的电势幅值。所以进一步简化得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=E_{t} \cos \left(\alpha-\theta_{0}\right)=E_{t} \cos \delta_{i} \\
+e_{q}=E_{t} \sin \left(\alpha-\theta_{0}\right)=E_{t} \cos \delta_{i}
+\end{array}</script><p>那么端口电压的复数形式$\tilde{E}_{t}$为:</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}=e_{d}+j e_{q}</script><p>假设端口电流$I_{t}$和端口电压的夹角为$\phi$，那么端口电流的表达式可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+i_{d}=I_{t} \sin \left(\delta_{i}+\phi\right) \\
+i_{q}=I_{t} \cos \left(\delta_{i}+\phi\right)
+\end{array}</script><p>同样地，端口电流复数形式$\tilde{E}_{t}$为:</p>
+<script type="math/tex; mode=display">
+\tilde{I}_{t}=i_{d}+j i_{q}</script><p>上述过程更明确的理解可以参考图11：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\steady_representation.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图11
+</div>
+
+
+
+<p>为了用端口电流表示端口电压，可以利用$\tilde{E}_{t}=e_{d}+j e_{q}$和之前建立的标准电压方程来一起推导，由于稳态下没有变压器电势和等值绕组Q和D的电流，因此电压方程可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=-\omega_{s} \psi_{q}-R_{a} i_{d}=\omega_{s}L_{q}i_{q}-R_{a} i_{d}=X_{q}i_{q}-R_{a} i_{d} \\
+e_{q}=\omega_{s} \psi_{d}-R_{a} i_{q}=-\omega_{s}L_{d}i_{d}+\omega_{s}L_{ad}i_{fd}-R_{a} i_{d}=-X_{d}i_{d}+X_{ad}i_{fd}-R_{a} i_{q} 
+\end{array}</script><p>那么，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\tilde{E}_{t} &=e_{d}+j e_{q} \\
+&= X_{q}i_{q}-R_{a} i_{d}+j(-X_{d}i_{d}+X_{ad}i_{fd}-R_{a} i_{q} )
+\end{aligned}</script><p>为了加入端口电流，而且能使方程更加简化，可以在左侧加上一个电抗项$jX_{q}\tilde{I}_{t}$：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+jX_{q}\tilde{I}_{t}=X_{q}i_{q}-R_{a} i_{d}+j(-X_{d}i_{d}+X_{ad}i_{fd}-R_{a} i_{q} )+jX_{q}\tilde{I}_{t}</script><p>进一步将右边整理得到：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+(R_{a}+jX_{q})\tilde{I}_{t}=j(-(X_{d}-X_{q})i_{d}+X_{ad}i_{fd})</script><p>再虚拟一个电源电势$\tilde{E}_{q}=j(-(X_{d}-X_{q})i_{d}+X_{ad}i_{fd})$，那么有：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{q}=\tilde{E}_{t}+(R_{a}+jX_{q})\tilde{I}_{t}</script><p>电源电势里面包含的$jX_{ad}i_{fd}$项是空载电势，如果用这个来表示同步电机稳态模型，只能用两个电路分别表征d轴和q轴模型，虚拟电源电势则很好解决了这个问题，这个包含虚拟电源电势的电路图可以画成图12：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\circuit_image.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图12
+</div>
+
+<p>而相量图可以画成：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\phasor_of_eq.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图13
+</div>
+
+<p>其中，$\delta_{i}$是熟知的功角，为虚拟电源电势和端口电压的夹角，而虚拟电源电势的方向和空载电势方向是一样的，所以直观来看就是空载电势和端口电压的夹角，转子拖着负载在转，负载越大，功角越大。</p>
+<h2 id="同步电机动态条件下的建模分析"><a href="#同步电机动态条件下的建模分析" class="headerlink" title="同步电机动态条件下的建模分析"></a>同步电机动态条件下的建模分析</h2><p>这小节并不打算讨论同步电机基于微分代数方程的动态行为，而是通过简化，了解发生故障后同步电机的发展过程，侧重分析瞬间短路电流的大小程度。</p>
+<p>在发生短路之后，同步发电机的磁链不会发生突变，为了抵消定子侧因巨大而产生巨大的去磁短路电流，励磁绕组和等值绕组D、Q都会产生额外的电流，以保持各自线圈通过的磁链不变。感性一点来看，在短路瞬间，转子励磁线圈产生的磁场在定子三相达到某个磁链值，从定子侧来看，各相必然要产生直流电流来维持这个初始值，而转子的磁场会继续同步旋转，因此各相还会有交流电流。这样一来，转子侧的磁场又要发生改变，所以转子各线圈电流也会相应包含交流电流和直流电流。因此可以推知的是，在短路条件下，同步电机内包含了两部分力矩：转子侧直流和定子侧交流、转子侧交流和定子侧直流产生的同步制动转矩；转子侧直流和定子侧直流产生的交变转矩，其方向每半个周期变化一次。</p>
+<p>各个线圈电流的突变量所包含的能量最后都会消耗在各自包含的电阻中，根据线圈电阻和电感参数的不同，等值绕组突变量最先消失，它消失前的阶段称为次暂态过程；接着是励磁线圈突变量的消耗，这个过程称为暂态过程。因此接下来，分别介绍这两个过程突变瞬间的等效电路。<strong>注：下面分析与kundur的书略有不同，因为kundur的书中转子有两个等值绕组D和两个等值绕组Q，而本文中转子只有一个等值绕组D和一个等值绕组Q，不过分析思路是一样的</strong>。</p>
+<p>衰减图如图14所示：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\shortcircuit.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图14
+</div>
+
+<h3 id="次暂态过程模型"><a href="#次暂态过程模型" class="headerlink" title="次暂态过程模型"></a>次暂态过程模型</h3><p>根据磁链方程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\psi_{d}=-L_{d} i_{d}+L_{a d} i_{f d}+L_{a d} i_{k d} \\
+\psi_{q}=-L_{q} i_{q}+L_{a q} i_{kq} \\
+\psi_{0}=-L_{0} i_{0} \\
+\psi_{f d}=L_{ff d} i_{f d}+L_{f k d} i_{k d}-L_{ad} i_{d} \\
+\psi_{k d}=L_{k d f} i_{f d}+L_{k k d} i_{k d}-L_{ad} i_{d} \\
+\psi_{k q}=L_{k k q} i_{k q}-L_{aq} i_{q}
+\end{array}</script><p>可以先建立各轴等效电路图：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\suntransientd.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图15  d轴等效电路图
+</div>
+
+
+
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\suntransientq.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图16  q轴等效电路图
+</div>
+
+
+<p>这里之所以要画出这两个等效电路图是因为根据标准电压方程：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=p \psi_{d}-\omega_{s} \psi_{q}-R_{a} i_{d} \\
+e_{q}=p \psi_{q}+\omega_{s} \psi_{d}-R_{a} i_{q} 
+\end{array}</script><p>在短路瞬间，假设没有变压器电势，而且电角速度不会突变（状态变量不突变），则$\omega_{s}=1$，那么标准电压方程可以写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=-\psi_{q}-R_{a} i_{d} \\
+e_{q}=\psi_{d}-R_{a} i_{q} 
+\end{array}</script><p>也就是说，只要知道$\psi_{q}$、$\psi_{d}$就可以求得次暂态模型等效电路图的端口电压$\tilde{E}_{t} =e_{d}+j e_{q}$。对图15、图16分别进行戴维南等值可以得到等效电源电势：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E_{q}^{\prime \prime}&=\frac{\frac{\psi_{fd}}{L_{fl}}+\frac{\psi_{kd}}{L_{fdl}}}{\frac{1}{L_{ad}}+\frac{1}{L_{fl}}+\frac{1}{L_{kdl}}} \\
+&= \frac{1}{\frac{1}{L_{ad}}+\frac{1}{L_{fl}}+\frac{1}{L_{kdl}}}\left(\frac{\psi_{fd}}{L_{fl}}+\frac{\psi_{kd}}{L_{kdl}}\right)  ) \\
+&= L_{ad}^{\prime \prime}\left(\frac{\psi_{fd}}{L_{fl}}+\frac{\psi_{kd}}{L_{kdl}}\right)
+\end{aligned}</script><p>因为$\omega_{s}=1$，上式可以写成电抗形式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E_{q}^{\prime \prime}&=\frac{\frac{\psi_{fd}}{X_{fl}}+\frac{\psi_{kd}}{X_{fdl}}}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}+\frac{1}{X_{kdl}}} \\
+&= \frac{1}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}+\frac{1}{X_{kdl}}}\left(\frac{\psi_{fd}}{X_{fl}}+\frac{\psi_{kd}}{X_{kdl}}\right)  ) \\
+&= X_{ad}^{\prime \prime}\left(\frac{\psi_{fd}}{X_{fl}}+\frac{\psi_{kd}}{X_{kdl}}\right)
+\end{aligned}</script><p>而d轴等效电抗（也称为次暂态d轴电抗）则为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X_{d}^{\prime \prime}&=X_{l}+\frac{1}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}+\frac{1}{X_{kdl}}} \\
+&= X_{l}+X_{ad}^{\prime \prime}
+\end{aligned}</script><p>那么d轴等效电路图的戴维南形式为图17：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\suntransientdd.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图17  d轴戴维南等效电路图
+</div>
+
+
+<p>采用同样的方式，q轴等效电源电势和等效电抗为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+-E_{d}^{\prime \prime}&=\frac{\frac{\psi_{kq}}{X_{fql}}}{\frac{1}{X_{aq}}+\frac{1}{L_{kql}}} \\
+&= \frac{1}{\frac{1}{X_{aq}}+\frac{1}{X_{kql}}}\frac{\psi_{kq}}{X_{kql}}\\
+&= X_{aq}^{\prime \prime}\frac{\psi_{kq}}{X_{kql}}
+\end{aligned}</script><p>这里左侧加了符号纯粹是为了后面简化，而q轴等效电抗（也称为次暂态q轴电抗）则为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X_{q}^{\prime \prime}&=X_{l}+\frac{1}{\frac{1}{X_{aq}}+\frac{1}{X_{kql}}} \\
+&= X_{l}+X_{aq}^{\prime \prime}
+\end{aligned}</script><p>那么q轴等效电路图的戴维南形式为图18：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\suntransientqq.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图18  q轴戴维南等效电路图
+</div>
+
+
+
+<p>那么标准电压方程可以进一步改写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=E_{d}^{\prime \prime}+X_{q}^{\prime \prime} i_{q}-R_{a} i_{d} \\
+e_{q}=E_{q}^{\prime \prime}-X_{d}^{\prime \prime} i_{d}-R_{a} i_{q} 
+\end{array}</script><p>那么，次暂态模型等效电路端口电压$\tilde{E}_{t}$为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\tilde{E}_{t} &=e_{d}+j e_{q} \\
+&= E_{d}^{\prime \prime}+X_{q}^{\prime \prime} i_{q}-R_{a} i_{d} +j(E_{q}^{\prime \prime}-X_{d}^{\prime \prime} i_{d}-R_{a} i_{q} ) \\
+&=E_{d}^{\prime \prime}+jE_{q}^{\prime \prime}-R_{a} \tilde{I}_{t}+X_{q}^{\prime \prime} i_{q}-jX_{d}^{\prime \prime} i_{d} \\
+&=E^{\prime \prime}-R_{a} \tilde{I''}_{t}+X_{q}^{\prime \prime} i_{q}-jX_{d}^{\prime \prime} i_{d}
+
+\end{aligned}</script><p>其中，$E^{\prime \prime}$称之为次暂态电源电势，$\tilde{I’’}_{t}$为次暂态模型等效电路端口电流，可以在左侧加上一个电抗项$jX’’_{d}\tilde{I}_{t}$：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+jX''_{d}\tilde{I}_{t}=E^{\prime \prime}-R_{a} \tilde{I''}_{t}+X_{q}^{\prime \prime} i_{q}-jX_{d}^{\prime \prime} i_{d}+jX''_{d}\tilde{I}_{t}</script><p>整理得到：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+(R_{a} +jX''_{d})\tilde{I}_{t}=E^{\prime \prime}+(X_{q}^{\prime \prime}-X_{d}^{\prime \prime} ) i_{q}</script><p>一般在次暂态过程中，$X_{q}^{\prime \prime}\approx X_{d}^{\prime \prime}$，$X_{q}-X_{d}^{\prime}$可以忽略，所以次暂态模型等效电路可以简化为：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}=E^{\prime \prime}-(R_{a} +jX''_{d})\tilde{I}_{t}</script><p>所以次暂态模型等效电路为图19：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\suntransient_equal.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图19  次暂态模型等效电路
+</div>
+
+
+<p>在次暂态过程中造成的电流最大，因为$X_{d}&gt;X’’_{d}$，但是相比暂态过程，其衰减也是最快的。</p>
+<h3 id="暂态过程模型"><a href="#暂态过程模型" class="headerlink" title="暂态过程模型"></a>暂态过程模型</h3><p>暂态模型推导过程和次暂态模型推导过程类似，只不过等值绕组D和Q的电流此时已经衰减到0了，即$i_{k d}=i_{k q}=0$只有励磁线圈还有电流突变量。那么根据磁链方程，可以先建立暂态模型各轴等效电路图：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\transientd.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图20  d轴等效电路图
+</div>
+
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\transientq.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图21  q轴等效电路图
+</div>
+
+
+
+<p>对图20、图21分别进行戴维南等值可以得到等效电源电势：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E_{q}^{\prime}&=\frac{\frac{\psi_{fd}}{L_{fl}}}{\frac{1}{L_{ad}}+\frac{1}{L_{fl}}} \\
+&= \frac{1}{\frac{1}{L_{ad}}+\frac{1}{L_{fl}}}\frac{\psi_{fd}}{L_{fl}}   \\
+&= L_{ad}^{\prime}\frac{\psi_{fd}}{L_{fl}}
+\end{aligned}</script><p>同样假设没有变压器电势，而且电角速度不会突变（状态变量不突变），那么$\omega_{s}=1$，上式可以写成电抗形式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E_{q}^{\prime}&=\frac{\frac{\psi_{fd}}{X_{fl}}}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}} \\
+&= \frac{1}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}}\frac{\psi_{fd}}{X_{fl}}   \\
+&= X_{ad}^{\prime}\frac{\psi_{fd}}{L_{fl}}
+\end{aligned}</script><p>而d轴等效电抗（也称为次暂态d轴电抗）则为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X_{d}^{ \prime}&=X_{l}+\frac{1}{\frac{1}{X_{ad}}+\frac{1}{X_{fl}}} \\
+&= X_{l}+X_{ad}^{\prime}
+\end{aligned}</script><p>那么d轴等效电路图的戴维南形式为图22：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\transientdd.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图22  d轴戴维南等效电路图
+</div>
+
+<p>q轴因为没有等值绕组而不存在相应的等效电路。</p>
+<p>那么标准电压方程可以进一步改写成：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+e_{d}=X_{q} i_{q}-R_{a} i_{d} \\
+e_{q}=E_{q}^{\prime}-X_{d}^{\prime} i_{d}-R_{a} i_{q} 
+\end{array}</script><p>那么，暂态模型等效电路端口电压$\tilde{E}_{t}$为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\tilde{E}_{t} &=e_{d}+j e_{q} \\
+&= X_{q} i_{q}-R_{a} i_{d}+j(E_{q}^{\prime}-X_{d}^{\prime} i_{d}-R_{a} i_{q} )\\
+&= X_{q} i_{q}+j(E_{q}^{\prime}-X_{d}^{\prime} i_{d})-R_{a} \tilde{I'}_{t} 
+
+\end{aligned}</script><p>其中，$\tilde{I’}_{t}$为暂态模型等效电路端口电流，可以在左侧加上一个电抗项$jX’_{d}\tilde{I}_{t}$：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+jX'_{d}\tilde{I}_{t}=jE^{\prime}_{q}-R_{a} \tilde{I}_{t}+X_{q} i_{q}-jX_{d}^{\prime} i_{d}+jX'_{d}\tilde{I}_{t}</script><p>整理得到：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}+(R_{a} +jX'_{d})\tilde{I}_{t}=jE^{\prime}_{q}+(X_{q}-X_{d}^{\prime} ) i_{q}</script><p>一般在暂态过程中，$X_{q}&gt; X_{d}^{\prime}$，$X_{q}-X_{d}^{\prime}$不能忽略，所以次暂态模型等效电路可以简化为：</p>
+<script type="math/tex; mode=display">
+\tilde{E}_{t}=E^{\prime}-(R_{a} +jX'_{d})\tilde{I}_{t}</script><p>其中，$E^{\prime}=jE^{\prime}_{q}+(X_{q}-X_{d}^{\prime} ) i_{q}$</p>
+<p>所以暂态模型等效电路为图23：</p>
+<div align=center>
+    <img src="\images\Power System Stability and Control\同步电机\transient_equal.jpg" width = "400" height = "400"> 
+</div>
+<div align=center>
+    图23  暂态模型等效电路
+</div>
+
+
+<p>在暂态过程中造成的电流比次暂态模型小，但比稳态模型大，因为$X_{d}&gt;X’_{d}&gt;X’’_{d}$，当暂态过程也衰减完之后，就过渡到稳态模型了。</p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" rel="tag">电力系统稳定与控制</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.png" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechatpay.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/08/04/%E9%9A%8F%E8%AE%B0/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">随记</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/14/%E5%AE%B6%E5%BA%AD%E3%80%81%E7%A7%81%E6%9C%89%E5%88%B6%E5%92%8C%E5%9B%BD%E5%AE%B6%E7%9A%84%E8%B5%B7%E6%BA%90/">
+                <span class="level-item">家庭、私有制和国家的起源</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+                          <!-- 修改，可选保留的栏 -->
+    
+    
+    
+    
+    <div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="/images/avatar.png" alt="谭本东">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        谭本东
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一个看不透事物本质的工科生！
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国湖北武汉</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            59
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            5
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            19
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+    </div>
+</div>
+        
+            
+
+    <div class="card widget" id="toc">
+        <div class="card-content">
+            <div class="menu">
+                <h3 class="menu-label">
+                    目录
+                </h3>
+                <ul class="menu-list"><li>
+        <a class="is-flex" href="#同步电机图示">
+        <span class="has-mr-6">1</span>
+        <span>同步电机图示</span>
+        </a></li><li>
+        <a class="is-flex" href="#同步电机的绕组分析">
+        <span class="has-mr-6">2</span>
+        <span>同步电机的绕组分析</span>
+        </a></li><li>
+        <a class="is-flex" href="#同步电机的磁场分析">
+        <span class="has-mr-6">3</span>
+        <span>同步电机的磁场分析</span>
+        </a></li><li>
+        <a class="is-flex" href="#同步电机模型的模型建立">
+        <span class="has-mr-6">4</span>
+        <span>同步电机模型的模型建立</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#正方向的确定">
+        <span class="has-mr-6">4.1</span>
+        <span>正方向的确定</span>
+        </a></li><li>
+        <a class="is-flex" href="#A-B-C坐标参考系下的同步电机模型">
+        <span class="has-mr-6">4.2</span>
+        <span>A-B-C坐标参考系下的同步电机模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#d-q-0坐标参考系下的同步电机模型">
+        <span class="has-mr-6">4.3</span>
+        <span>d-q-0坐标参考系下的同步电机模型</span>
+        </a></li></ul></li><li>
+        <a class="is-flex" href="#同步电机的稳态模型分析">
+        <span class="has-mr-6">5</span>
+        <span>同步电机的稳态模型分析</span>
+        </a></li><li>
+        <a class="is-flex" href="#同步电机动态条件下的建模分析">
+        <span class="has-mr-6">6</span>
+        <span>同步电机动态条件下的建模分析</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#次暂态过程模型">
+        <span class="has-mr-6">6.1</span>
+        <span>次暂态过程模型</span>
+        </a></li><li>
+        <a class="is-flex" href="#暂态过程模型">
+        <span class="has-mr-6">6.2</span>
+        <span>暂态过程模型</span>
+        </a></li></ul></li></ul>
+            </div>
+        </div>
+    </div>
+
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/%E4%BC%98%E5%8C%96/">
+            <span class="level-start">
+                <span class="level-item">优化</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E5%90%84%E7%B1%BB%E6%95%99%E7%A8%8B/">
+            <span class="level-start">
+                <span class="level-item">各类教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+            <span class="level-start">
+                <span class="level-item">机器学习</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">
+            <span class="level-start">
+                <span class="level-item">生活随笔</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">23</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F/">
+            <span class="level-start">
+                <span class="level-item">电力系统</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">17</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://tbendong.github.io" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">英文个人主页</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">tbendong.github.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/TanBendong" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Github</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.zhihu.com/people/tan-ben-dong/activities" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">知乎</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.zhihu.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://scholar.google.com/citations?user=FdEP8xgAAAAJ&hl=en" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">谷歌学术</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">scholar.google.com</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.researchgate.net/profile/Bendong_Tan" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">Researchgate</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.researchgate.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://www.linkedin.com/in/bendong-tan-453046182/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">领英</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">www.linkedin.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+        
+        
+            <div class="column-right-shadow is-hidden-widescreen is-sticky">
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/TSA/" style="font-size: 17.14px;">TSA</a> <a href="/tags/latex/" style="font-size: 10px;">latex</a> <a href="/tags/%E4%B9%A6%E6%B3%95/" style="font-size: 12.86px;">书法</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" style="font-size: 12.86px;">人工智能</a> <a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 10px;">优化</a> <a href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/" style="font-size: 12.86px;">凸优化</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 14.29px;">博客</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/" style="font-size: 18.57px;">学术活动</a> <a href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">广域测量系统</a> <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" style="font-size: 17.14px;">强化学习</a> <a href="/tags/%E6%80%BB%E7%BB%93/" style="font-size: 10px;">总结</a> <a href="/tags/%E6%84%9F%E6%82%9F/" style="font-size: 14.29px;">感悟</a> <a href="/tags/%E6%97%85%E6%B8%B8/" style="font-size: 18.57px;">旅游</a> <a href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/" style="font-size: 20px;">智能电网</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 15.71px;">机器学习</a> <a href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/" style="font-size: 14.29px;">电力系统稳定与控制</a> <a href="/tags/%E8%AE%A1%E5%88%92/" style="font-size: 11.43px;">计划</a> <a href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/" style="font-size: 14.29px;">读后感</a> <a href="/tags/%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">软件</a>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-10-02T16:00:00.000Z">2020-10-03</time></div>
+                    <a href="/2020/10/03/%E6%B5%85%E8%B0%88%E6%96%87%E5%8C%96/" class="title has-link-black-ter is-size-6 has-text-weight-normal">浅谈文化</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-11T16:00:00.000Z">2020-09-12</time></div>
+                    <a href="/2020/09/12/%E4%B8%B4%E6%B1%9F%E4%BB%99%E4%B8%B4%E6%91%B9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">《临江仙》临摹作品</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-07T16:00:00.000Z">2020-09-08</time></div>
+                    <a href="/2020/09/08/%E7%88%B1%E4%BD%A0%E5%B0%B1%E5%83%8F%E7%88%B1%E7%94%9F%E5%91%BD/" class="title has-link-black-ter is-size-6 has-text-weight-normal">爱你就像爱生命</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/2020%E5%B9%B4%E6%80%BB%E7%BB%93/" class="title has-link-black-ter is-size-6 has-text-weight-normal">2020年总结</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-09-05T16:00:00.000Z">2020-09-06</time></div>
+                    <a href="/2020/09/06/%E7%BB%83%E5%AD%97%E6%89%93%E5%8D%A1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">临帖每日记录(持续更新)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/">生活随笔</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">6</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+            
+                <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/TSA/">
+                        <span class="tag">TSA</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/latex/">
+                        <span class="tag">latex</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%B9%A6%E6%B3%95/">
+                        <span class="tag">书法</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="tag">人工智能</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E4%BC%98%E5%8C%96/">
+                        <span class="tag">优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%87%B8%E4%BC%98%E5%8C%96/">
+                        <span class="tag">凸优化</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%8D%9A%E5%AE%A2/">
+                        <span class="tag">博客</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%AD%A6%E6%9C%AF%E6%B4%BB%E5%8A%A8/">
+                        <span class="tag">学术活动</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%B9%BF%E5%9F%9F%E6%B5%8B%E9%87%8F%E7%B3%BB%E7%BB%9F/">
+                        <span class="tag">广域测量系统</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">强化学习</span>
+                        <span class="tag is-grey">7</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="tag">总结</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%84%9F%E6%82%9F/">
+                        <span class="tag">感悟</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%97%85%E6%B8%B8/">
+                        <span class="tag">旅游</span>
+                        <span class="tag is-grey">9</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%99%BA%E8%83%BD%E7%94%B5%E7%BD%91/">
+                        <span class="tag">智能电网</span>
+                        <span class="tag is-grey">12</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+                        <span class="tag">机器学习</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E7%94%B5%E5%8A%9B%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E4%B8%8E%E6%8E%A7%E5%88%B6/">
+                        <span class="tag">电力系统稳定与控制</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AE%A1%E5%88%92/">
+                        <span class="tag">计划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/">
+                        <span class="tag">读后感</span>
+                        <span class="tag is-grey">4</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/">
+                        <span class="tag">软件</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+            
+            </div>
+        
+    </div>
+    
+                
+
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="Power System Stability and Control (Kundur)----同步电机" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 谭本东&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 
+                </p>
+
+            </div>
+
+            <div class="level-middle">
+                <small>
+                <center>
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <script>
+                    var now = new Date(); 
+                    function createtime() { 
+                        var grt= new Date("01/06/2018 12:00:00");//此处修改你的建站时间或者网站上线时间 
+                        now.setTime(now.getTime()+250); 
+                        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+                        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+                        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+                        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+                        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+                        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+                        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+                        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+                    } 
+                setInterval("createtime()",250);
+                </script>
+                
+                    <br>
+                    <span id="busuanzi_container_site_pv" class="theme-info">| 本站总访问量<span id="busuanzi_value_site_pv"></span>次</span> 
+                    <span id="busuanzi_container_site_uv" class="theme-info">| 您是第<span id="busuanzi_value_site_uv"></span>位访问的朋友 |</span>                         
+                
+                </center>
+                </small>
+                
+            </div>
+
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/TanBendong">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://tanbendong.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'folded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+    
+</body>
+</html>
